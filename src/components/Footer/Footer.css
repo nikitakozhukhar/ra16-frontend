@@ -1,0 +1,49 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.footer__left-col,
+.footer__middle-col,
+.footer__right-col {
+  flex-basis: 25%;
+}
+
+.footer__nav-list {
+  margin: 10px;
+}
+
+.payment-list {
+  content: url('../../../html/img/footer-payment.png');
+  margin-bottom: 20px;
+}
+
+.license {
+  font-size: 12px;
+}
+
+.footer__right-col {
+  text-align: right;
+}
+
+.telephone,
+.email {
+  color: gray
+}
+
+.tweeter {
+  content: url('../../../html/img/footer-socials-tweeter.png');
+  cursor: pointer;
+}
+
+.vk {
+  content: url('../../../html/img/footer-socials-vk.png');
+  cursor: pointer;
+}
+
+.information,
+.payment,
+.contacts {
+  font-weight: 600;
+}
