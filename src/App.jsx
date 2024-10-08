@@ -25,6 +25,7 @@ function App() {
             <Route path='/about' element={<AboutPage />}/>
             <Route path='/cart' element={<CartPage />}/>
             <Route path='/catalog' element={<CatalogPage />}/>
+            <Route path='/catalog/:id' element={<CatalogItemPage />}/>
             <Route path='/contacts' element={<ContactsPage />}/>
             <Route path='*' element={<Page404 />}/>
           </Routes>
