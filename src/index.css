@@ -197,6 +197,28 @@ section {
   min-height: 300px;
 }
 
+.top-sales__row {
+  display: flex;
+}
+
+.card {
+  width: 33%;
+}
+
+.catalog-item-card img {
+  width: 100%;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-text {
+  flex-basis: 40px;
+}
+
 /* Catalog */
 .catalog {
   min-height: 600px;

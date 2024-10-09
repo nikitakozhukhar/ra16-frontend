@@ -8,7 +8,7 @@ const HomePage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchAsyncTopSales)
+    dispatch(fetchAsyncTopSales())
   }, [dispatch])
 
   return (

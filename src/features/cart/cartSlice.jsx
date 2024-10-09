@@ -7,6 +7,7 @@ export const fetchAsyncTopSales = createAsyncThunk(
     const response = await serverApi.get(
       `top-sales`
     );
+   
     return response.data;
   }
 );

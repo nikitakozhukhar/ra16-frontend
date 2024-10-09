@@ -1,18 +1,32 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { getTopSales } from '../../features/cart/cartSlice';
+import React from "react";
+import { useSelector } from "react-redux";
+import { getTopSales } from "../../features/cart/cartSlice";
+import Loader from "../Loader/Loader";
+import ItemCard from "../ItemCard/ItemCard";
 
 const TopSales = () => {
-
   const topSales = useSelector(getTopSales);
   let renderTopSales;
 
-  console.log(topSales)
+  // renderTopSales = topSales.map(() => {
+  //   return <ItemCard />
+  // })
+
+  console.log(topSales);
 
   return (
-    <div>
-      
-    </div>
+    <section className="top-sales">
+      <h2 className="text-center">Хиты продаж!</h2>
+      <div className="top-sales__row">
+        {!topSales.length ? (
+          <Loader></Loader>
+        ) : (
+          (renderTopSales = topSales.map((item) => {
+            return <ItemCard key={item.id} item={item} />;
+          }))
+        )}
+      </div>
+    </section>
   );
 };
 
