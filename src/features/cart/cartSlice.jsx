@@ -12,6 +12,17 @@ export const fetchAsyncTopSales = createAsyncThunk(
   }
 );
 
+export const fetchAsyncCatalog = createAsyncThunk(
+  "cart/fetchAsyncCatalog",
+  async () => {
+    const response = await serverApi.get(
+      `categories`
+    );
+   
+    return response.data;
+  }
+);
+
 // export const fetchAsyncShows = createAsyncThunk(
 //   "cart/fetchAsyncShows",
 //   async (term) => {
@@ -34,7 +45,8 @@ export const fetchAsyncTopSales = createAsyncThunk(
 
 const initialState = {
   cart: {},
-  topSales: {}
+  topSales: {},
+  fetchCategories: {}
 };
 
 const cartSlice = createSlice({
@@ -60,11 +72,23 @@ const cartSlice = createSlice({
     .addCase(fetchAsyncTopSales.rejected, () => {
       console.log('Rejected!');
     })
+
+    .addCase(fetchAsyncCatalog.pending, () => {
+      console.log('Pending')
+    })
+    .addCase(fetchAsyncCatalog.fulfilled, (state, {payload}) => {
+      console.log('Fetch successefully!');
+      state.fetchCategories = payload
+    })
+    .addCase(fetchAsyncCatalog.rejected, () => {
+      console.log('Rejected!');
+    })
   }
 });
 
 export const { removeSelectedMovieOrShow, addToFavorites } = cartSlice.actions;
 export const getTopSales = (state) => state.cart.topSales;
+export const getfetchedCategories = (state) => state.cart.fetchCategories;
 // export const getAllShows = (state) => state.cart.shows;
 // export const getSelectedMovieOrShow = (state) => state.cart.selectedMovieOrShow;
 export default cartSlice.reducer;

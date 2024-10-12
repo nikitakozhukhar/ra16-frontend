@@ -1,49 +1,90 @@
 .footer {
+  padding: 0 25px;
+}
+
+.footer-row {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
 }
 
-.footer__left-col,
-.footer__middle-col,
-.footer__right-col {
-  flex-basis: 25%;
+.col {
+  flex-basis: 300px;
 }
 
-.footer__nav-list {
-  margin: 10px;
+.nav-item-footer {
+  padding: 10px 0px;
 }
 
-.payment-list {
-  content: url('../../../html/img/footer-payment.png');
-  margin-bottom: 20px;
+.footer-pay {
+  display: flex;
+  justify-content: space-between;
+  margin: 12px auto 0;
+}
+.footer-pay-systems {
+  width: 46px;
+  height: 28px;
+  border: 2px solid #FFFFFF;
+  border-radius: 8px;
+  background-color: #FFFFFF;
+  background-repeat: no-repeat;
+  background-image: url('../../img/footer-sprite.png');
+}
+.footer-pay-systems:not(:first-child) {
+  margin-left: 5px;
+}
+.footer-pay-systems-paypal {
+  background-position: -2px -6px;
+}
+.footer-pay-systems-master-card {
+  background-position: -54px -8px;
+}
+.footer-pay-systems-visa {
+  background-position: -104px -8px;
+}
+.footer-pay-systems-yandex {
+  background-position: -154px -8px;
+}
+.footer-pay-systems-webmoney {
+  background-position: -2px -46px;
+}
+.footer-pay-systems-qiwi {
+  background-position: -52px -46px;
 }
 
-.license {
-  font-size: 12px;
-}
-
-.footer__right-col {
+.text-right {
   text-align: right;
 }
 
-.telephone,
-.email {
-  color: gray
+.footer-social-links {
+  margin-top: 10px;
 }
-
-.tweeter {
-  content: url('../../../html/img/footer-socials-tweeter.png');
+.footer-social-link {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  margin: 0 5px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-image: url('../../img/footer-sprite.png');
+}
+.footer-social-link-twitter {
+  background-position: -107px -42px;
+}
+.footer-social-link-vk {
+  background-position: -157px -42px;
+}
+.footer-social-link:hover {
   cursor: pointer;
 }
 
-.vk {
-  content: url('../../../html/img/footer-socials-vk.png');
-  cursor: pointer;
+.footer-copyright {
+  font-size: 0.8em;
 }
 
-.information,
-.payment,
-.contacts {
-  font-weight: 600;
+.footer-contacts-phone {
+  display: block;
+}
+
+.footer-contacts-email {
+  display: block;
 }

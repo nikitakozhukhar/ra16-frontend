@@ -1,38 +1,45 @@
-import React from "react";
+import React, { useState } from 'react';
+import { useSelector } from "react-redux";
+import { getfetchedCategories } from "../../features/cart/cartSlice";
+import Loader from "../Loader/Loader";
 
-const CatalogPage = () => {
+const Catalog = () => {
+  const fetchCategories = useSelector(getfetchedCategories);
+
+  // const initialState = fetchCategories
+  
+  // console.log(fetchCategories)
+
+  let renderCategories;
+
+  const [selected, setSelected] = useState('Все')
+
+  console.log(fetchCategories)
+
+  // const selectCategory = (category) => {
+  //   if (category === 'Все') {
+
+  //   }
+  // }
+
   return (
     <section className="catalog">
       <h2 className="text-center">Каталог</h2>
-      <form className="catalog-search-form form-inline">
-        <input className="form-control" placeholder="Поиск" />
-      </form>
+      
       <ul className="catalog-categories nav justify-content-center">
-        <li className="nav-item">
-          <a className="nav-link active" href="#">
-            Все
-          </a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="#">
-            Женская обувь
-          </a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="#">
-            Мужская обувь
-          </a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="#">
-            Обувь унисекс
-          </a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="#">
-            Детская обувь
-          </a>
-        </li>
+        {!fetchCategories.length ? (
+          <Loader></Loader>
+        ) : (
+          (renderCategories = fetchCategories.map(category => {
+            return <li key={category.id} className="nav-item">
+            <a className={selected === category.title ? 'nav-link active' : 'nav-link'}href="#">
+              {category.title}
+            </a>
+          </li>
+          }))
+        )
+        }
+        
       </ul>
       <div className="row">
         <div className="col-4">
@@ -139,4 +146,4 @@ const CatalogPage = () => {
   );
 };
 
-export default CatalogPage;
+export default Catalog;

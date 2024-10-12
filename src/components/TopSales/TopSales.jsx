@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { getTopSales } from "../../features/cart/cartSlice";
 import Loader from "../Loader/Loader";
 import ItemCard from "../ItemCard/ItemCard";
+import './TopSales.css'
 
 const TopSales = () => {
   const topSales = useSelector(getTopSales);
@@ -12,7 +13,7 @@ const TopSales = () => {
   //   return <ItemCard />
   // })
 
-  console.log(topSales);
+ 
 
   return (
     <section className="top-sales">
