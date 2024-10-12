@@ -23,3 +23,14 @@
 .card-text {
   flex-basis: 40px;
 }
+
+.btn {
+  padding: 10px;
+  width: 100px;
+  border: 1px solid gray;
+  text-align: center;
+}
+
+.btn:hover {
+  color: white;
+}

@@ -9,11 +9,6 @@ const TopSales = () => {
   const topSales = useSelector(getTopSales);
   let renderTopSales;
 
-  // renderTopSales = topSales.map(() => {
-  //   return <ItemCard />
-  // })
-
- 
 
   return (
     <section className="top-sales">
