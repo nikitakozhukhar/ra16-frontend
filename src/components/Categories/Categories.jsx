@@ -8,7 +8,6 @@ const Categories = () => {
   const fetchCategories = useSelector(getfetchedCategories);
 
   let renderCategories;
-  console.log(fetchCategories)
   const [selected, setSelected] = useState("Все");  
 
   return (

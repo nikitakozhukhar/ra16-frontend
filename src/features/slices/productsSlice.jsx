@@ -57,7 +57,7 @@ export const fetchAsyncProducts = createAsyncThunk(
 const initialState = {
   cart: {},
   topSales: {},
-  fetchCategories: {id:11, title: 'Все'},
+  fetchCategories: {},
   products: {},
 };
 

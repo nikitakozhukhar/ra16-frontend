@@ -22,8 +22,8 @@ const Catalog = () => {
             <Loader></Loader>
           ) : (
             renderProducts = fetchProducts.map(item => (
-              <div className="col-4">
-                <ItemCard key={item.id} item={item}/>
+              <div key={item.id} className="col-4">
+                <ItemCard item={item}/>
               </div>
             ))
           )
