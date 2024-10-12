@@ -12,11 +12,22 @@ export const fetchAsyncTopSales = createAsyncThunk(
   }
 );
 
-export const fetchAsyncCatalog = createAsyncThunk(
-  "products/fetchAsyncCatalog",
+export const fetchAsyncCategories = createAsyncThunk(
+  "products/fetchAsyncCategories",
   async () => {
     const response = await serverApi.get(
       `categories`
+    );
+   
+    return response.data;
+  }
+);
+
+export const fetchAsyncProducts = createAsyncThunk(
+  "products/fetchAsyncProducts",
+  async () => {
+    const response = await serverApi.get(
+      `items`
     );
    
     return response.data;
@@ -46,7 +57,8 @@ export const fetchAsyncCatalog = createAsyncThunk(
 const initialState = {
   cart: {},
   topSales: {},
-  fetchCategories: {}
+  fetchCategories: {},
+  products: {},
 };
 
 const productsSlice = createSlice({
@@ -62,6 +74,7 @@ const productsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+    //получение данных для компонента TopSales
     .addCase(fetchAsyncTopSales.pending, () => {
       console.log('Pending')
     })
@@ -72,15 +85,26 @@ const productsSlice = createSlice({
     .addCase(fetchAsyncTopSales.rejected, () => {
       console.log('Rejected!');
     })
-
-    .addCase(fetchAsyncCatalog.pending, () => {
+  //получение данных для компонента Catalog 
+    .addCase(fetchAsyncCategories.pending, () => {
       console.log('Pending')
     })
-    .addCase(fetchAsyncCatalog.fulfilled, (state, {payload}) => {
+    .addCase(fetchAsyncCategories.fulfilled, (state, {payload}) => {
       console.log('Fetch successefully!');
       state.fetchCategories = payload
     })
-    .addCase(fetchAsyncCatalog.rejected, () => {
+    .addCase(fetchAsyncCategories.rejected, () => {
+      console.log('Rejected!');
+    })
+
+    .addCase(fetchAsyncProducts.pending, () => {
+      console.log('Pending')
+    })
+    .addCase(fetchAsyncProducts.fulfilled, (state, {payload}) => {
+      console.log('Fetch successefully!');
+      state.fetchCategories = payload
+    })
+    .addCase(fetchAsyncProducts.rejected, () => {
       console.log('Rejected!');
     })
   }

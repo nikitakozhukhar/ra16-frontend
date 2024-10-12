@@ -1,5 +1,4 @@
 import React from "react";
-import "../../index.css";
 
 const ItemCard = (props) => {
   const { category, id, price, title, images } = props.item;
