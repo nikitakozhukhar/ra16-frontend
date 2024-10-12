@@ -37,7 +37,9 @@ const Header = () => {
                 </li>
               </ul>
             </div>
-            <div className="header-controls-comtainer">
+          </nav>
+        </div>
+        <div className="header-controls-comtainer">
                 <div className="header-controls-pics">
                   <div
                     data-id="search-expander"
@@ -55,8 +57,6 @@ const Header = () => {
                   <input className="form-control" placeholder="Поиск" />
                 </form>
               </div>
-          </nav>
-        </div>
       </div>
     </header>
   );
