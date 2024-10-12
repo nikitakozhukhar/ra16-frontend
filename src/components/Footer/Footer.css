@@ -7,7 +7,7 @@
   justify-content: space-between;
 }
 
-.col {
+.col-3 {
   flex-basis: 300px;
 }
 

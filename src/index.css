@@ -112,6 +112,7 @@ h2, .h2 {
   width: 100px;
   border: 1px solid gray;
   text-align: center;
+  cursor: pointer;
 }
 
 .btn:hover {

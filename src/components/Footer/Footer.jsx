@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer className="container bg-light footer">
       <div className="footer-row row">
-        <div className="col">
+        <div className="col-3">
           <section>
             <h5>Информация</h5>
             <ul className="nav flex-column">

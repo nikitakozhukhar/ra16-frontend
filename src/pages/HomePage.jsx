@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchAsyncTopSales, fetchAsyncCategories } from '../features/slices/productsSlice';
+import { 
+        fetchAsyncTopSales, 
+        fetchAsyncCategories,
+        fetchAsyncProducts
+      } from '../features/slices/productsSlice';
 import TopSales from '../components/TopSales/TopSales';
 import Catalog from '../components/Catalog/Catalog';
 
@@ -11,6 +15,7 @@ const HomePage = () => {
   useEffect(() => {
     dispatch(fetchAsyncTopSales())
     dispatch(fetchAsyncCategories())
+    dispatch(fetchAsyncProducts())
   }, [dispatch])
 
   return (

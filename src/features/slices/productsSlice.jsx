@@ -74,6 +74,7 @@ const productsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+
     //получение данных для компонента TopSales
     .addCase(fetchAsyncTopSales.pending, () => {
       console.log('Pending')
@@ -85,7 +86,8 @@ const productsSlice = createSlice({
     .addCase(fetchAsyncTopSales.rejected, () => {
       console.log('Rejected!');
     })
-  //получение данных для компонента Catalog 
+
+  //получение данных для компонента Categories 
     .addCase(fetchAsyncCategories.pending, () => {
       console.log('Pending')
     })
@@ -97,12 +99,13 @@ const productsSlice = createSlice({
       console.log('Rejected!');
     })
 
+    //получение данных для компонента Categories 
     .addCase(fetchAsyncProducts.pending, () => {
       console.log('Pending')
     })
     .addCase(fetchAsyncProducts.fulfilled, (state, {payload}) => {
       console.log('Fetch successefully!');
-      state.fetchCategories = payload
+      state.products = payload
     })
     .addCase(fetchAsyncProducts.rejected, () => {
       console.log('Rejected!');
@@ -113,6 +116,7 @@ const productsSlice = createSlice({
 export const { removeSelectedMovieOrShow, addToFavorites } = productsSlice.actions;
 export const getTopSales = (state) => state.products.topSales;
 export const getfetchedCategories = (state) => state.products.fetchCategories;
+export const getfetchedProducts = (state) => state.products.products;
 // export const getAllShows = (state) => state.cart.shows;
 // export const getSelectedMovieOrShow = (state) => state.cart.selectedMovieOrShow;
 export default productsSlice.reducer;

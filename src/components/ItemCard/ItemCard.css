@@ -1,0 +1,13 @@
+.catalog-item-card img {
+  width: 100%;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-text {
+  flex-basis: 40px;
+}

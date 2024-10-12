@@ -37,7 +37,7 @@ const Header = () => {
                 </li>
               </ul>
             </div>
-            <div>
+            <div className="header-controls-comtainer">
                 <div className="header-controls-pics">
                   <div
                     data-id="search-expander"

@@ -1,9 +1,23 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { getfetchedProducts } from "../../features/slices/productsSlice";
 import ItemCard from "../ItemCard/ItemCard";
 import Categories from "../Categories/Categories";
+import Loader from "../Loader/Loader";
+import './Catalog.css'
 
 const Catalog = () => {
- 
+  const fetchProducts = useSelector(getfetchedProducts);
+  let renderProducts;
+
+  if (fetchProducts.length > 0) {
+    const { category, id, price, title, images } = fetchProducts;
+    console.log(fetchProducts)
+  }
+  
+
+  
+
   return (
     <section className="catalog">
       <h2 className="text-center">Каталог</h2>
@@ -11,23 +25,17 @@ const Catalog = () => {
       <Categories />
 
       <div className="row">
-        <div className="col-4">
-          {/* <ItemCard /> */}
-          <div className="card catalog-item-card">
-            <img
-              src="./img/products/sandals_myer.jpg"
-              className="card-img-top img-fluid"
-              alt="Босоножки 'MYER'"
-            />
-            <div className="card-body">
-              <p className="card-text">Босоножки 'MYER'</p>
-              <p className="card-text">34 000 руб.</p>
-              <a href="/products/1.html" className="btn btn-outline-primary">
-                Заказать
-              </a>
-            </div>
-          </div>
-        </div>
+        {
+          !fetchProducts.length ? (
+            <Loader></Loader>
+          ) : (
+            renderProducts = fetchProducts.map(item => (
+              <div className="col-4">
+                <ItemCard key={item.id} item={item}/>
+              </div>
+            ))
+          )
+        }
       </div>
       <div className="text-center">
         <button className="btn btn-outline-primary">Загрузить ещё</button>

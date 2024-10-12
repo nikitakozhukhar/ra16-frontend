@@ -1,0 +1,9 @@
+.row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.col-4 {
+  align-self: flex-end;
+  flex-basis: 33%;
+}
