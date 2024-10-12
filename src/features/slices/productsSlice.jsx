@@ -25,11 +25,12 @@ export const fetchAsyncCategories = createAsyncThunk(
 
 export const fetchAsyncProducts = createAsyncThunk(
   "products/fetchAsyncProducts",
-  async () => {
+  async (term) => {
     const response = await serverApi.get(
-      `items`
+      !term ? `items` : `items?q=${term}`
     );
-   
+    
+    console.log('fetchAsyncProducts', response.data)
     return response.data;
   }
 );

@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 
 
 const Header = () => {
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenSerchFild = () => {
+    setIsOpen(!isOpen)
+    console.log('isOpen', isOpen)
+  }
  
   return (
     <header className="container">
@@ -11,7 +18,6 @@ const Header = () => {
         <div className="col">
           <nav className="navbar navbar-expand-sm navbar-light bg-light">
             <Link to='/' className="navbar-brand" >
-              {/* <img src="../../img/header-logo.png" alt="Bosa Noga" /> */}
             </Link>
             <div className="collapase navbar-collapse" id="navbarMain">
               <ul className="navbar-nav mr-auto">
@@ -44,6 +50,7 @@ const Header = () => {
                   <div
                     data-id="search-expander"
                     className="header-controls-pic header-controls-search"
+                    onClick={() => handleOpenSerchFild()}
                   />
                   <div className="header-controls-pic header-controls-cart">
                     <div className="header-controls-cart-full">1</div>
@@ -52,7 +59,10 @@ const Header = () => {
                 </div>
                 <form
                   data-id="search-form"
-                  className="header-controls-search-form form-inline invisible"
+                  className={!isOpen ? 
+                    "header-controls-search-form form-inline invisible" :
+                    "header-controls-search-form form-inline"
+                  }
                 >
                   <input className="form-control" placeholder="Поиск" />
                 </form>
