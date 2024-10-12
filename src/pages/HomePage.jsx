@@ -21,7 +21,7 @@ const HomePage = () => {
   return (
     <div>
       <TopSales />
-      <Catalog /> 
+      <Catalog showSearcField={false}/> 
     </div>
   );
 };

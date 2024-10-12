@@ -6,13 +6,22 @@ import Categories from "../Categories/Categories";
 import Loader from "../Loader/Loader";
 import './Catalog.css'
 
-const Catalog = () => {
+const Catalog = ({showSearcField}) => {
   const fetchProducts = useSelector(getfetchedProducts);
   let renderProducts;
-  
+
+  console.log(showSearcField)
+
   return (
     <section className="catalog">
       <h2 className="text-center">Каталог</h2>
+
+      {
+        (showSearcField) && 
+        <form className="catalog-search-form form-inline">
+          <input className="form-control" placeholder="Поиск" />
+        </form>
+      }
 
       <Categories />
 
