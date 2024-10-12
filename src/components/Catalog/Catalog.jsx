@@ -9,15 +9,7 @@ import './Catalog.css'
 const Catalog = () => {
   const fetchProducts = useSelector(getfetchedProducts);
   let renderProducts;
-
-  if (fetchProducts.length > 0) {
-    const { category, id, price, title, images } = fetchProducts;
-    console.log(fetchProducts)
-  }
   
-
-  
-
   return (
     <section className="catalog">
       <h2 className="text-center">Каталог</h2>

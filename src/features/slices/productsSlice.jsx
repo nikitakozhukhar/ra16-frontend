@@ -57,7 +57,7 @@ export const fetchAsyncProducts = createAsyncThunk(
 const initialState = {
   cart: {},
   topSales: {},
-  fetchCategories: {},
+  fetchCategories: {id:11, title: 'Все'},
   products: {},
 };
 
@@ -93,7 +93,7 @@ const productsSlice = createSlice({
     })
     .addCase(fetchAsyncCategories.fulfilled, (state, {payload}) => {
       console.log('Fetch successefully!');
-      state.fetchCategories = payload
+      state.fetchCategories =  [{ id: 11, title: 'Все' }, ...payload];
     })
     .addCase(fetchAsyncCategories.rejected, () => {
       console.log('Rejected!');

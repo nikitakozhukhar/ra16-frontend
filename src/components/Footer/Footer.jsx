@@ -29,7 +29,7 @@ const Footer = () => {
             </ul>
           </section>
         </div>
-        <div className="col">
+        <div className="col-3">
           <section>
             <h5>Принимаем к оплате:</h5>
             <div className="footer-pay">
@@ -50,7 +50,7 @@ const Footer = () => {
             </div>
           </section>
         </div>
-        <div className="col text-right">
+        <div className="col-3 text-right">
           <section className="footer-contacts">
             <h5>Контакты:</h5>
             <a className="footer-contacts-phone" href="tel:+7-495-790-35-03">
