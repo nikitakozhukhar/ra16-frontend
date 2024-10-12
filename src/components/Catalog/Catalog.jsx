@@ -1,5 +1,4 @@
 import React from "react";
-
 import ItemCard from "../ItemCard/ItemCard";
 import Categories from "../Categories/Categories";
 

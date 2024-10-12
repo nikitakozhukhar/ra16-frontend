@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { getfetchedCategories } from "../../features/slices/productsSlice";
 import Loader from "../Loader/Loader";
+import './Categories.css'
 
 const Categories = () => {
   const fetchCategories = useSelector(getfetchedCategories);
