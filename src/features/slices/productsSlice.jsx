@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import serverApi from "../../common/apis/serverApi";
 
 export const fetchAsyncTopSales = createAsyncThunk(
-  "cart/fetchAsyncTopSales",
+  "products/fetchAsyncTopSales",
   async () => {
     const response = await serverApi.get(
       `top-sales`
@@ -13,7 +13,7 @@ export const fetchAsyncTopSales = createAsyncThunk(
 );
 
 export const fetchAsyncCatalog = createAsyncThunk(
-  "cart/fetchAsyncCatalog",
+  "products/fetchAsyncCatalog",
   async () => {
     const response = await serverApi.get(
       `categories`
@@ -49,8 +49,8 @@ const initialState = {
   fetchCategories: {}
 };
 
-const cartSlice = createSlice({
-  name: "cart",
+const productsSlice = createSlice({
+  name: "products",
   initialState,
   reducers: {
     removeSelectedMovieOrShow: (state) => {
@@ -86,9 +86,9 @@ const cartSlice = createSlice({
   }
 });
 
-export const { removeSelectedMovieOrShow, addToFavorites } = cartSlice.actions;
-export const getTopSales = (state) => state.cart.topSales;
-export const getfetchedCategories = (state) => state.cart.fetchCategories;
+export const { removeSelectedMovieOrShow, addToFavorites } = productsSlice.actions;
+export const getTopSales = (state) => state.products.topSales;
+export const getfetchedCategories = (state) => state.products.fetchCategories;
 // export const getAllShows = (state) => state.cart.shows;
 // export const getSelectedMovieOrShow = (state) => state.cart.selectedMovieOrShow;
-export default cartSlice.reducer;
+export default productsSlice.reducer;

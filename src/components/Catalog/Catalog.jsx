@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { getfetchedCategories } from "../../features/cart/cartSlice";
+import { getfetchedCategories } from "../../features/slices/productsSlice";
 import Loader from "../Loader/Loader";
 
 const Catalog = () => {
   const fetchCategories = useSelector(getfetchedCategories);
 
   // const initialState = fetchCategories
-  
+
   // console.log(fetchCategories)
 
   let renderCategories;
 
-  const [selected, setSelected] = useState('Все')
+  const [selected, setSelected] = useState("Все");
 
-  console.log(fetchCategories)
+  console.log(fetchCategories);
 
   // const selectCategory = (category) => {
   //   if (category === 'Все') {
@@ -25,21 +25,24 @@ const Catalog = () => {
   return (
     <section className="catalog">
       <h2 className="text-center">Каталог</h2>
-      
+
       <ul className="catalog-categories nav justify-content-center">
         {!fetchCategories.length ? (
           <Loader></Loader>
         ) : (
-          (renderCategories = fetchCategories.map(category => {
-            return <li key={category.id} className="nav-item">
-            <a className={selected === category.title ? 'nav-link active' : 'nav-link'}href="#">
-              {category.title}
-            </a>
-          </li>
-          }))
-        )
-        }
-        
+          (renderCategories = fetchCategories.map((category) => (
+            <li key={category.id} className="nav-item">
+              <a
+                className={
+                  selected === category.title ? "nav-link active" : "nav-link"
+                }
+                href="#"
+              >
+                {category.title}
+              </a>
+            </li>
+          )))
+        )}
       </ul>
       <div className="row">
         <div className="col-4">

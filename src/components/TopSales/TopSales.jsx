@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { getTopSales } from "../../features/cart/cartSlice";
+import { getTopSales } from "../../features/slices/productsSlice";
 import Loader from "../Loader/Loader";
 import ItemCard from "../ItemCard/ItemCard";
 import './TopSales.css'

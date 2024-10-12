@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchAsyncTopSales, fetchAsyncCatalog } from '../features/cart/cartSlice';
+import { fetchAsyncTopSales, fetchAsyncCatalog } from '../features/slices/productsSlice';
 import TopSales from '../components/TopSales/TopSales';
 import Catalog from '../components/Catalog/Catalog';
 
