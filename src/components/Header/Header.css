@@ -27,6 +27,7 @@
 .header-controls-comtainer {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .header-controls-pics {
@@ -36,6 +37,7 @@
   margin-left: auto;
   position: relative;
 }
+
 .header-controls-pic {
   height: 32px;
   width: 32px;

@@ -118,6 +118,4 @@ export const { removeSelectedMovieOrShow, addToFavorites } = productsSlice.actio
 export const getTopSales = (state) => state.products.topSales;
 export const getfetchedCategories = (state) => state.products.fetchCategories;
 export const getfetchedProducts = (state) => state.products.products;
-// export const getAllShows = (state) => state.cart.shows;
-// export const getSelectedMovieOrShow = (state) => state.cart.selectedMovieOrShow;
 export default productsSlice.reducer;

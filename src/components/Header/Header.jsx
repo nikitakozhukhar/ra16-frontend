@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import SearchForm from "../SearchForm/SearchForm";
 import "./Header.css";
 
 
 const Header = () => {
 
   const [isOpen, setIsOpen] = useState(false);
+  console.log(isOpen)
+  
+  const fieldStyle  = "header-controls-search-form form-inline"
 
   const handleOpenSerchFild = () => {
     setIsOpen(!isOpen)
@@ -56,16 +60,9 @@ const Header = () => {
                     <div className="header-controls-cart-full">1</div>
                     <div className="header-controls-cart-menu" />
                   </div>
+                  
                 </div>
-                <form
-                  data-id="search-form"
-                  className={!isOpen ? 
-                    "header-controls-search-form form-inline invisible" :
-                    "header-controls-search-form form-inline"
-                  }
-                >
-                  <input className="form-control" placeholder="Поиск" />
-                </form>
+                {isOpen ? <SearchForm renderFieldStyle={fieldStyle}/> : null}
               </div>
       </div>
     </header>
