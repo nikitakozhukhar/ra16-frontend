@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Catalog from "../components/Catalog/Catalog";
-import Categories from "../components/Categories/Categories";
+import { useDispatch } from 'react-redux';
+import { 
+  fetchAsyncCategories,
+  fetchAsyncProducts
+} from '../features/slices/productsSlice';
 
 const CatalogPage = () => {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAsyncCategories())
+    dispatch(fetchAsyncProducts())
+  }, [dispatch])
+
   return (
     <section className="catalog">
       
