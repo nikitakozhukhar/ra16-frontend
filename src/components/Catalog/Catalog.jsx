@@ -15,13 +15,15 @@ const Catalog = ({showSearcField}) => {
   const fetchProducts = useSelector(getfetchedProducts);
   let renderProducts;
 
+  const fieldStyle  = "catalog-search-form form-inline"
+
   return (
     <section className="catalog">
       <h2 className="text-center">Каталог</h2>
 
       {
         (showSearcField) && 
-        <SearchForm />
+        <SearchForm renderFieldStyle={fieldStyle}/>
       }
 
       <Categories />
