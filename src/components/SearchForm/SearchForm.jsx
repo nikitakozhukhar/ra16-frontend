@@ -1,20 +1,8 @@
-import React, { useState } from "react";
-// import { useDispatch } from "react-redux";
-// import { fetchAsyncProducts } from "../../features/slices/productsSlice";
+import React from "react";
 
 import "./SearchForm.css"
 
 const SearchForm = ({ renderFieldStyle, term, setTerm, onSubmite}) => {
-
-  // const [term, setTerm] = useState('')
-  // const dispatch = useDispatch();
-
-
-  // const submitHandler = (e) => {
-  //   e.preventDefault();
-  //   if (term === '') return
-  //   dispatch(fetchAsyncProducts(term))
-  // }
 
   return (
     <form 
