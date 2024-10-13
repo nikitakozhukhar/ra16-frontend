@@ -1,6 +1,8 @@
-import React from "react";
-import { useSelector,  } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector,  useDispatch  } from "react-redux";
 import { getfetchedProducts } from "../../features/slices/productsSlice";
+import { getSearchTerm } from "../../features/slices/searchSlice";
+import { fetchAsyncProducts } from "../../features/slices/productsSlice";
 
 import ItemCard from "../ItemCard/ItemCard";
 import Categories from "../Categories/Categories";
@@ -11,11 +13,26 @@ import SearchForm from "../SearchForm/SearchForm";
 
 const Catalog = ({showSearcField}) => {
 
-
+  const dispatch = useDispatch();
+  const searchTerm = useSelector(getSearchTerm)
   const fetchProducts = useSelector(getfetchedProducts);
+  const [term, setTerm] = useState(searchTerm)
+
   let renderProducts;
 
   const fieldStyle  = "catalog-search-form form-inline"
+
+  useEffect(() => {
+    if (term) {
+      dispatch(fetchAsyncProducts(term))
+    }
+  }, [term, dispatch])
+
+  const handleSearchSubmite = (e) => {
+    e.preventDefault();
+    if (term === '') return
+    dispatch(fetchAsyncProducts(term))
+  }
 
   return (
     <section className="catalog">
@@ -23,7 +40,12 @@ const Catalog = ({showSearcField}) => {
 
       {
         (showSearcField) && 
-        <SearchForm renderFieldStyle={fieldStyle}/>
+        <SearchForm 
+          renderFieldStyle={fieldStyle}
+          term={term}
+          setTerm={setTerm}
+          onSubmite={handleSearchSubmite}
+          />
       }
 
       <Categories />

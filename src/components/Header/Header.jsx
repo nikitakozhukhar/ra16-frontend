@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setSearchTerm } from "../../features/slices/searchSlice";
 import SearchForm from "../SearchForm/SearchForm";
 import "./Header.css";
 
@@ -7,13 +9,22 @@ import "./Header.css";
 const Header = () => {
 
   const [isOpen, setIsOpen] = useState(false);
-  console.log(isOpen)
+  const [term, setTerm] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   
   const fieldStyle  = "header-controls-search-form form-inline"
 
   const handleOpenSerchFild = () => {
     setIsOpen(!isOpen)
-    console.log('isOpen', isOpen)
+  }
+
+  const handleSubmite = (e) => {
+    e.preventDefault();
+    if (term === '') return
+    dispatch(setSearchTerm(term));
+    navigate('/catalog')
+
   }
  
   return (
@@ -62,7 +73,12 @@ const Header = () => {
                   </div>
                   
                 </div>
-                {isOpen ? <SearchForm renderFieldStyle={fieldStyle}/> : null}
+                {isOpen ? <SearchForm 
+                            renderFieldStyle={fieldStyle}
+                            term={term}
+                            setTerm={setTerm}
+                            onSubmite={handleSubmite}
+                            /> : null}
               </div>
       </div>
     </header>

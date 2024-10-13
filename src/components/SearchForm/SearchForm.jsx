@@ -1,25 +1,25 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { fetchAsyncProducts } from "../../features/slices/productsSlice";
+// import { useDispatch } from "react-redux";
+// import { fetchAsyncProducts } from "../../features/slices/productsSlice";
 
 import "./SearchForm.css"
 
-const SearchForm = ({renderFieldStyle}) => {
+const SearchForm = ({ renderFieldStyle, term, setTerm, onSubmite}) => {
 
-  const [term, setTerm] = useState('')
-  const dispatch = useDispatch();
+  // const [term, setTerm] = useState('')
+  // const dispatch = useDispatch();
 
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    if (term === '') return
-    dispatch(fetchAsyncProducts(term))
-  }
+  // const submitHandler = (e) => {
+  //   e.preventDefault();
+  //   if (term === '') return
+  //   dispatch(fetchAsyncProducts(term))
+  // }
 
   return (
     <form 
             className={renderFieldStyle}
-            onSubmit={submitHandler}>
+            onSubmit={onSubmite}>
           <input
                 type="text" 
                 value={term} 
