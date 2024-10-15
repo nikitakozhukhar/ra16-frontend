@@ -29,49 +29,36 @@ export const fetchAsyncProducts = createAsyncThunk(
     const response = await serverApi.get(
       !term ? `items` : `items?q=${term}`
     );
-    
-    console.log('fetchAsyncProducts', response.data)
     return response.data;
   }
 );
 
-// export const fetchAsyncShows = createAsyncThunk(
-//   "cart/fetchAsyncShows",
-//   async (term) => {
-//     const response = await serverApi.get(
-//       `?apiKey=${ApiKey}&s=${term}&type=series`
-//     );
-//     return response.data;
-//   }
-// );
-
-// export const fetchAsyncSMovieOrShowsDetail = createAsyncThunk(
-//   "cart/fetchAsyncSMovieOrShowsDetail",
-//   async (id) => {
-//     const response = await serverApi.get(
-//       `?apiKey=${ApiKey}&i=${id}&Plot=full`
-//     );
-//     return response.data;
-//   }
-// );
+export const fetchAsyncProductDetails = createAsyncThunk(
+  "products/fetchAsyncProductDetails",
+  async (id) => {
+    const response = await serverApi.get(
+      `items/${id}`
+    );
+    console.log('response.data details', response.data)
+    return response.data;
+  }
+);
 
 const initialState = {
   cart: {},
   topSales: {},
   fetchCategories: {},
   products: {},
+  selectedProduct: {}
 };
 
 const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    removeSelectedMovieOrShow: (state) => {
-      state.selectedMovieOrShow = {}
+    removeSelectedProduct: (state) => {
+      state.selectedProduct = {}
     },
-    addToCart: (state, {payload}) => {
-      state.cart = payload
-    }
   },
   extraReducers: (builder) => {
     builder
@@ -89,9 +76,6 @@ const productsSlice = createSlice({
     })
 
   //получение данных для компонента Categories 
-    .addCase(fetchAsyncCategories.pending, () => {
-      console.log('Pending')
-    })
     .addCase(fetchAsyncCategories.fulfilled, (state, {payload}) => {
       console.log('Fetch successefully!');
       state.fetchCategories =  [{ id: 11, title: 'Все' }, ...payload];
@@ -101,9 +85,6 @@ const productsSlice = createSlice({
     })
 
     //получение данных для компонента Categories 
-    .addCase(fetchAsyncProducts.pending, () => {
-      console.log('Pending')
-    })
     .addCase(fetchAsyncProducts.fulfilled, (state, {payload}) => {
       console.log('Fetch successefully!');
       state.products = payload
@@ -111,11 +92,22 @@ const productsSlice = createSlice({
     .addCase(fetchAsyncProducts.rejected, () => {
       console.log('Rejected!');
     })
+
+    //получение данных для компонента ItemCardDetails 
+    .addCase(fetchAsyncProductDetails.fulfilled, (state, {payload}) => {
+      console.log('Fetch successefully!');
+      console.log('selectedProduct', payload);
+      state.selectedProduct = payload
+    })
+    .addCase(fetchAsyncProductDetails.rejected, () => {
+      console.log('Rejected!');
+    })
   }
 });
 
-export const { removeSelectedMovieOrShow, addToFavorites } = productsSlice.actions;
+export const { removeSelectedProduct } = productsSlice.actions;
 export const getTopSales = (state) => state.products.topSales;
 export const getfetchedCategories = (state) => state.products.fetchCategories;
 export const getfetchedProducts = (state) => state.products.products;
+export const getfetchedProductDetails = (state) => state.products.selectedProduct;
 export default productsSlice.reducer;
