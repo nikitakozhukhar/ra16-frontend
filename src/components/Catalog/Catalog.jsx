@@ -18,8 +18,6 @@ const Catalog = ({showSearcField}) => {
   const fetchProducts = useSelector(getfetchedProducts);
   const [term, setTerm] = useState(searchTerm)
 
-  let renderProducts;
-
   const fieldStyle  = "catalog-search-form form-inline"
 
   useEffect(() => {
@@ -55,7 +53,7 @@ const Catalog = ({showSearcField}) => {
           !fetchProducts.length ? (
             <Loader></Loader>
           ) : (
-            renderProducts = fetchProducts.map(item => (
+            fetchProducts.map(item => (
               <div key={item.id} className="col-4">
                 <ItemCard item={item}/>
               </div>
