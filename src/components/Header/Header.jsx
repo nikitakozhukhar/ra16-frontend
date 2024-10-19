@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setSearchTerm } from "../../features/slices/searchSlice";
+import { fetchAsyncProducts } from "../../features/slices/productsSlice";
+
 import SearchForm from "../SearchForm/SearchForm";
 import "./Header.css";
 
@@ -16,15 +18,19 @@ const Header = () => {
   const fieldStyle  = "header-controls-search-form form-inline"
 
   const handleOpenSerchFild = () => {
-    setIsOpen(!isOpen)
+    setIsOpen(true)
   }
 
   const handleSubmite = (e) => {
     e.preventDefault();
-    if (term === '') return
-    dispatch(setSearchTerm(term));
-    navigate('/catalog')
+    if (term === '') return;
+    navigate('/catalog');
 
+    dispatch(setSearchTerm(term));
+    dispatch(fetchAsyncProducts(term))
+    setTerm('');
+    
+    setIsOpen(false);
   }
  
   return (
@@ -77,7 +83,7 @@ const Header = () => {
                             renderFieldStyle={fieldStyle}
                             term={term}
                             setTerm={setTerm}
-                            onSubmite={handleSubmite}
+                            onSubmit={handleSubmite}
                             /> : null}
               </div>
       </div>

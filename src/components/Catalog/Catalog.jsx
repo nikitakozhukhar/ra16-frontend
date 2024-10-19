@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useSelector,  useDispatch  } from "react-redux";
-import { getfetchedProducts } from "../../features/slices/productsSlice";
+import { 
+  getfetchedProducts, 
+  fetchAsyncProducts 
+  } from "../../features/slices/productsSlice";
 import { getSearchTerm } from "../../features/slices/searchSlice";
-import { fetchAsyncProducts } from "../../features/slices/productsSlice";
 
 import ItemCard from "../ItemCard/ItemCard";
 import Categories from "../Categories/Categories";
 import Loader from "../Loader/Loader";
+import SearchForm from "../SearchForm/SearchForm"; 
 import './Catalog.css'
 
-import SearchForm from "../SearchForm/SearchForm"; 
 
 const Catalog = ({showSearcField}) => {
 
@@ -21,10 +23,11 @@ const Catalog = ({showSearcField}) => {
   const fieldStyle  = "catalog-search-form form-inline"
 
   useEffect(() => {
-    if (term) {
-      dispatch(fetchAsyncProducts(term))
+    if (searchTerm) {
+      setTerm(searchTerm)
+      dispatch(fetchAsyncProducts(searchTerm))
     }
-  }, [term, dispatch])
+  }, [searchTerm, dispatch])
 
   const handleSearchSubmite = (e) => {
     e.preventDefault();
@@ -42,7 +45,7 @@ const Catalog = ({showSearcField}) => {
           renderFieldStyle={fieldStyle}
           term={term}
           setTerm={setTerm}
-          onSubmite={handleSearchSubmite}
+          onSubmit={handleSearchSubmite}
           />
       }
 

@@ -13,7 +13,6 @@ export default function ItemCardDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const details = useSelector(getfetchedProductDetails);
-  console.log(details);
 
   useEffect(() => {
     dispatch(fetchAsyncProductDetails(id));

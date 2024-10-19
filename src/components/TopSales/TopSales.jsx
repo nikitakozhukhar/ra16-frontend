@@ -7,9 +7,7 @@ import './TopSales.css'
 
 const TopSales = () => {
   const topSales = useSelector(getTopSales);
-  let renderTopSales;
-
-
+ 
   return (
     <section className="top-sales">
       <h2 className="text-center">Хиты продаж!</h2>
@@ -17,7 +15,7 @@ const TopSales = () => {
         {!topSales.length ? (
           <Loader></Loader>
         ) : (
-          (renderTopSales = topSales.map((item) => {
+          (topSales.map((item) => {
             return <ItemCard key={item.id} item={item} />;
           }))
         )}

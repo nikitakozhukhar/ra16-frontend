@@ -2,19 +2,19 @@ import React from "react";
 
 import "./SearchForm.css"
 
-const SearchForm = ({ renderFieldStyle, term, setTerm, onSubmite}) => {
+const SearchForm = ({ renderFieldStyle, term, setTerm, onSubmit}) => {
 
   return (
     <form 
             className={renderFieldStyle}
-            onSubmit={onSubmite}>
+            onSubmit={onSubmit}>
           <input
                 type="text" 
                 value={term} 
                 className="form-control" 
                 placeholder="Поиск" 
                 onChange={(e) => setTerm(e.target.value)} 
-                />
+          />
         </form>
   );
 };
