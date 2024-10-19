@@ -7,18 +7,21 @@ import './TopSales.css'
 
 const TopSales = () => {
   const topSales = useSelector(getTopSales);
+  const {items, loading, error} = topSales;
+  console.log(items)
+
+  if (loading) return <Loader />
+  if (error) return <>{error.message}</>
  
   return (
     <section className="top-sales">
       <h2 className="text-center">Хиты продаж!</h2>
       <div className="top-sales__row">
-        {!topSales.length ? (
-          <Loader></Loader>
-        ) : (
-          (topSales.map((item) => {
+        {
+          items.map(item => {
             return <ItemCard key={item.id} item={item} />;
-          }))
-        )}
+          })
+        }
       </div>
     </section>
   );

@@ -3,12 +3,17 @@ import serverApi from "../../common/apis/serverApi";
 
 export const fetchAsyncTopSales = createAsyncThunk(
   "products/fetchAsyncTopSales",
-  async () => {
-    const response = await serverApi.get(
-      `top-sales`
-    );
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await serverApi.get(`top-sales`);
+      return response.data;
+    } catch(err) {
+      if (!err.response) {
+        throw err
+      }
+      return rejectWithValue(err.response.data)
+    }
    
-    return response.data;
   }
 );
 
@@ -46,10 +51,26 @@ export const fetchAsyncProductDetails = createAsyncThunk(
 
 const initialState = {
   cart: {},
-  topSales: {},
-  fetchCategories: {},
-  products: {},
-  selectedProduct: {}
+  topSales: {
+    items: [],
+    loading: false,
+    error: null,
+  },
+  fetchCategories: {
+    items: [],
+    loading: false,
+    error: null,
+  },
+  products: {
+    items: [],
+    loading: false,
+    error: null,
+  },
+  selectedProduct: {
+    item: {},
+    loading: false,
+    error: null,
+  },
 };
 
 const productsSlice = createSlice({
@@ -57,22 +78,26 @@ const productsSlice = createSlice({
   initialState,
   reducers: {
     removeSelectedProduct: (state) => {
-      state.selectedProduct = {}
+      state.selectedProduct = {item: {}, loading: false, error: null }
     },
   },
   extraReducers: (builder) => {
     builder
 
     //получение данных для компонента TopSales
-    .addCase(fetchAsyncTopSales.pending, () => {
-      console.log('Pending')
+    .addCase(fetchAsyncTopSales.pending, (state) => {
+      state.topSales.loading = true;
+      state.topSales.error = null;
     })
-    .addCase(fetchAsyncTopSales.fulfilled, (state, {payload}) => {
+    .addCase(fetchAsyncTopSales.fulfilled, (state, { payload }) => {
       console.log('Fetch successefully!');
-      state.topSales = payload
+      state.topSales.loading = false;
+      state.topSales.items = payload;
     })
-    .addCase(fetchAsyncTopSales.rejected, () => {
+    .addCase(fetchAsyncTopSales.rejected, (state, { error }) => {
       console.log('Rejected!');
+      state.topSales.loading = false;
+      state.topSales.error = error.message;
     })
 
   //получение данных для компонента Categories 
