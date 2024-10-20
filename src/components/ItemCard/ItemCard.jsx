@@ -4,8 +4,6 @@ import './ItemCard.css'
 
 const ItemCard = (props) => {
   const { category, id, price, title, images } = props.item;
-  // const image1 = images[0];
-  // const image2 = images[1];
 
   return (
     <div className="card catalog-item-card">

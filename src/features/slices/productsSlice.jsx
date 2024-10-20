@@ -8,7 +8,6 @@ export const fetchAsyncTopSales = createAsyncThunk(
       const response = await serverApi.get(`top-sales`);
       return response.data;
     } catch(err) {
-      console.log('response: ', err)
       if (!err.response) {
         throw err
       }
@@ -23,7 +22,6 @@ export const fetchAsyncCategories = createAsyncThunk(
     
       try {
         const response = await serverApi.get(`categories`);
-        console.log('response: ', response)
         return response.data;
       } catch(err) {
         if (!err.response) {
@@ -53,12 +51,16 @@ export const fetchAsyncProducts = createAsyncThunk(
 
 export const fetchAsyncProductDetails = createAsyncThunk(
   "products/fetchAsyncProductDetails",
-  async (id) => {
-    const response = await serverApi.get(
-      `items/${id}`
-    );
-    console.log('response.data details', response.data)
-    return response.data;
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await serverApi.get(`items/${id}`);
+      return response.data;
+    } catch(err) {
+      if (!err.response) {
+        throw err
+      }
+      return rejectWithValue(err.response.data)
+    }
   }
 );
 
@@ -140,10 +142,17 @@ const productsSlice = createSlice({
     })
 
     //получение данных для компонента ItemCardDetails 
-    .addCase(fetchAsyncProductDetails.fulfilled, (state, {payload}) => {
-      state.selectedProduct = payload
+    .addCase(fetchAsyncProductDetails.pending, (state) => {
+      state.selectedProduct.loading = true;
+      state.selectedProduct.error = null;
     })
-    .addCase(fetchAsyncProductDetails.rejected, () => {
+    .addCase(fetchAsyncProductDetails.fulfilled, (state, {payload}) => {
+      state.selectedProduct.loading = false;
+      state.selectedProduct.item = payload;
+    })
+    .addCase(fetchAsyncProductDetails.rejected, (state) => {
+      state.fetchCategories.loading = false;
+      state.fetchCategories.error = 'Во время запроса карточки товара произошла ошибка';
     })
   }
 });

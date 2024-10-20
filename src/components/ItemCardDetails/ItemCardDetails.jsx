@@ -13,6 +13,7 @@ export default function ItemCardDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const details = useSelector(getfetchedProductDetails);
+  const { item, loading, error } = details;
 
   useEffect(() => {
     dispatch(fetchAsyncProductDetails(id));
@@ -22,43 +23,52 @@ export default function ItemCardDetails() {
     };
   }, [dispatch, id]);
 
+  if (loading) return <Loader />;
+  if (error) return <>{error}</>;
+  
   return (
     <section className="catalog-item">
-      {Object.keys(details).length === 0 ? (
-        <Loader></Loader>
-      ) : (
+      {
         <>
-          <h2 className="text-center">{details.title}</h2>
+          <h2 className="text-center">{item.title}</h2>
           <div className="row row-details">
             <div className="col-5">
-              <img src={details.images[0]} className="img-fluid" alt="" />
+              {item.images && item.images.length > 0 ? (
+                <img
+                  src={item.images[0]}
+                  className="img-fluid"
+                  alt={item.title}
+                />
+              ) : (
+                <p>Изображение недоступно</p>
+              )}
             </div>
             <div className="col-7">
               <table className="table table-bordered">
                 <tbody>
                   <tr>
-                    <td > Артикул</td>
-                    <td>{details.sku}</td>
+                    <td> Артикул</td>
+                    <td>{item.sku}</td>
                   </tr>
                   <tr>
                     <td>Производитель</td>
-                    <td>{details.manufacturer}</td>
+                    <td>{item.manufacturer}</td>
                   </tr>
                   <tr>
                     <td>Цвет</td>
-                    <td>{details.color}</td>
+                    <td>{item.color}</td>
                   </tr>
                   <tr>
                     <td>Материалы</td>
-                    <td>{details.material}</td>
+                    <td>{item.material}</td>
                   </tr>
                   <tr>
                     <td>Сезон</td>
-                    <td>{details.season}</td>
+                    <td>{item.season}</td>
                   </tr>
                   <tr>
                     <td>Повод</td>
-                    <td>{details.reason}</td>
+                    <td>{item.reason}</td>
                   </tr>
                 </tbody>
               </table>
@@ -83,7 +93,7 @@ export default function ItemCardDetails() {
             </div>
           </div>
         </>
-      )}
+      }
     </section>
   );
 }
