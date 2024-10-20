@@ -11,7 +11,7 @@ const Categories = () => {
   const {items, loading, error} = fetchCategories;
 
   if (loading) return <Loader />
-  if (error) return <>{error.message}</>
+  if (error) return <>{error}</>
 
   return (
     <ul className="catalog-categories nav justify-content-center">

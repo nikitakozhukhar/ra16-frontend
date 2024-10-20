@@ -36,11 +36,18 @@ export const fetchAsyncCategories = createAsyncThunk(
 
 export const fetchAsyncProducts = createAsyncThunk(
   "products/fetchAsyncProducts",
-  async (term) => {
-    const response = await serverApi.get(
-      !term ? `items` : `items?q=${term}`
-    );
-    return response.data;
+  async (term, { rejectWithValue }) => {
+    try {
+      const response = await serverApi.get(
+        !term ? `items` : `items?q=${term}`
+      );
+      return response.data;
+    } catch(err) {
+      if (!err.response) {
+        throw err
+      }
+      return rejectWithValue(err.response.data)
+    }
   }
 );
 
@@ -101,7 +108,7 @@ const productsSlice = createSlice({
     })
     .addCase(fetchAsyncTopSales.rejected, (state, { error }) => {
       state.topSales.loading = false;
-      state.topSales.error = error.message;
+      state.topSales.error = 'Во время запроса "Хитов продаж" произошла ошибка';
     })
 
   //получение данных для компонента Categories 
@@ -115,15 +122,21 @@ const productsSlice = createSlice({
     })
     .addCase(fetchAsyncCategories.rejected, (state, { error }) => {
       state.fetchCategories.loading = false;
-      state.fetchCategories.error = error.message;
+      state.fetchCategories.error = 'Во время запроса категорий произошла ошибка';
     })
 
-    //получение данных для компонента Categories 
-    .addCase(fetchAsyncProducts.fulfilled, (state, {payload}) => {
-      state.products = payload
+    //получение данных для компонента Products 
+    .addCase(fetchAsyncProducts.pending, (state) => {
+      state.products.loading = true;
+      state.products.error = null;
     })
-    .addCase(fetchAsyncProducts.rejected, () => {
-      
+    .addCase(fetchAsyncProducts.fulfilled, (state, {payload}) => {
+      state.products.loading = false;
+      state.products.items = payload
+    })
+    .addCase(fetchAsyncProducts.rejected, (state) => {
+      state.fetchCategories.loading = false;
+      state.fetchCategories.error = 'Во время запроса товаров произошла ошибка';
     })
 
     //получение данных для компонента ItemCardDetails 

@@ -35,6 +35,11 @@ const Catalog = ({showSearcField}) => {
     dispatch(fetchAsyncProducts(term))
   }
 
+  const { items, loading, error } = fetchProducts;
+
+  if (loading) return <Loader />
+  if (error) return <>{error.message}</>
+
   return (
     <section className="catalog">
       <h2 className="text-center">Каталог</h2>
@@ -53,15 +58,11 @@ const Catalog = ({showSearcField}) => {
 
       <div className="row">
         {
-          !fetchProducts.length ? (
-            <Loader></Loader>
-          ) : (
-            fetchProducts.map(item => (
-              <div key={item.id} className="col-4">
-                <ItemCard item={item}/>
-              </div>
-            ))
-          )
+          items.map(item => (
+            <div key={item.id} className="col-4">
+              <ItemCard item={item}/>
+            </div>
+          ))
         }
       </div>
       <div className="text-center">
