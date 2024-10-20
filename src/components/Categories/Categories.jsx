@@ -7,15 +7,11 @@ import './Categories.css'
 const Categories = () => {
   const fetchCategories = useSelector(getfetchedCategories);
 
-  console.log(fetchCategories)
-
-  let renderCategories;
   const [selected, setSelected] = useState("Все");  
   const {items, loading, error} = fetchCategories;
 
   if (loading) return <Loader />
   if (error) return <>{error.message}</>
-
 
   return (
     <ul className="catalog-categories nav justify-content-center">
