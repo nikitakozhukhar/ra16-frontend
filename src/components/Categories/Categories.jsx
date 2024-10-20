@@ -7,27 +7,32 @@ import './Categories.css'
 const Categories = () => {
   const fetchCategories = useSelector(getfetchedCategories);
 
+  console.log(fetchCategories)
+
   let renderCategories;
   const [selected, setSelected] = useState("Все");  
+  const {items, loading, error} = fetchCategories;
+
+  if (loading) return <Loader />
+  if (error) return <>{error.message}</>
+
 
   return (
     <ul className="catalog-categories nav justify-content-center">
-        {!fetchCategories.length ? (
-          <Loader></Loader>
-        ) : (
-          (renderCategories = fetchCategories.map((category) => (
-            <li key={category.id} className="nav-item">
+        {
+          items.map((item) => (
+            <li key={item.id} className="nav-item">
               <a
                 className={
-                  selected === category.title ? "nav-link active" : "nav-link"
+                  selected === item.title ? "nav-link active" : "nav-link"
                 }
                 href="#"
               >
-                {category.title}
+                {item.title}
               </a>
             </li>
-          )))
-        )}
+          ))
+        }
       </ul>
   );
 };

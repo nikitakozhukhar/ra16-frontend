@@ -8,24 +8,30 @@ export const fetchAsyncTopSales = createAsyncThunk(
       const response = await serverApi.get(`top-sales`);
       return response.data;
     } catch(err) {
+      console.log('response: ', err)
       if (!err.response) {
         throw err
       }
       return rejectWithValue(err.response.data)
     }
-   
   }
 );
 
 export const fetchAsyncCategories = createAsyncThunk(
   "products/fetchAsyncCategories",
-  async () => {
-    const response = await serverApi.get(
-      `categories`
-    );
-   
-    return response.data;
-  }
+  async (_, { rejectWithValue }) => {
+    
+      try {
+        const response = await serverApi.get(`categories`);
+        console.log('response: ', response)
+        return response.data;
+      } catch(err) {
+        if (!err.response) {
+          throw err
+        }
+        return rejectWithValue(err.response.data)
+      }
+    }
 );
 
 export const fetchAsyncProducts = createAsyncThunk(
@@ -90,42 +96,41 @@ const productsSlice = createSlice({
       state.topSales.error = null;
     })
     .addCase(fetchAsyncTopSales.fulfilled, (state, { payload }) => {
-      console.log('Fetch successefully!');
       state.topSales.loading = false;
       state.topSales.items = payload;
     })
     .addCase(fetchAsyncTopSales.rejected, (state, { error }) => {
-      console.log('Rejected!');
       state.topSales.loading = false;
       state.topSales.error = error.message;
     })
 
   //получение данных для компонента Categories 
-    .addCase(fetchAsyncCategories.fulfilled, (state, {payload}) => {
-      console.log('Fetch successefully!');
-      state.fetchCategories =  [{ id: 11, title: 'Все' }, ...payload];
+    .addCase(fetchAsyncCategories.pending, (state) => {
+      state.fetchCategories.loading = true;
+      state.fetchCategories.error = null;
     })
-    .addCase(fetchAsyncCategories.rejected, () => {
-      console.log('Rejected!');
+    .addCase(fetchAsyncCategories.fulfilled, (state, { payload }) => {
+      state.fetchCategories.loading = false;
+      state.fetchCategories.items =  [{ id: 11, title: 'Все' }, ...payload];
+    })
+    .addCase(fetchAsyncCategories.rejected, (state, { error }) => {
+      state.fetchCategories.loading = false;
+      state.fetchCategories.error = error.message;
     })
 
     //получение данных для компонента Categories 
     .addCase(fetchAsyncProducts.fulfilled, (state, {payload}) => {
-      console.log('Fetch successefully!');
       state.products = payload
     })
     .addCase(fetchAsyncProducts.rejected, () => {
-      console.log('Rejected!');
+      
     })
 
     //получение данных для компонента ItemCardDetails 
     .addCase(fetchAsyncProductDetails.fulfilled, (state, {payload}) => {
-      console.log('Fetch successefully!');
-      console.log('selectedProduct', payload);
       state.selectedProduct = payload
     })
     .addCase(fetchAsyncProductDetails.rejected, () => {
-      console.log('Rejected!');
     })
   }
 });

@@ -8,7 +8,6 @@ import './TopSales.css'
 const TopSales = () => {
   const topSales = useSelector(getTopSales);
   const {items, loading, error} = topSales;
-  console.log(items)
 
   if (loading) return <Loader />
   if (error) return <>{error.message}</>
