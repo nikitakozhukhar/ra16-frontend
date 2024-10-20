@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useSelector,  useDispatch  } from "react-redux";
 import { 
   getfetchedProducts, 
-  fetchAsyncProducts 
+  fetchAsyncProducts,
+  getfetchedProductsByCategory,
+  fetchAsyncProductsByCategory
   } from "../../features/slices/productsSlice";
 import { getSearchTerm } from "../../features/slices/searchSlice";
 
@@ -18,16 +20,23 @@ const Catalog = ({showSearcField}) => {
   const dispatch = useDispatch();
   const searchTerm = useSelector(getSearchTerm)
   const fetchProducts = useSelector(getfetchedProducts);
+  const selectedProductsCategory = useSelector(getfetchedProductsByCategory)
   const [term, setTerm] = useState(searchTerm)
 
-  const fieldStyle  = "catalog-search-form form-inline"
+  const fieldStyle  = "catalog-search-form form-inline";
+
+  console.log(selectedProductsCategory)
 
   useEffect(() => {
     if (searchTerm) {
       setTerm(searchTerm)
       dispatch(fetchAsyncProducts(searchTerm))
     }
-  }, [searchTerm, dispatch])
+    if (selectedProductsCategory.category.id) {
+      dispatch(fetchAsyncProductsByCategory(selectedProductsCategory.category.id))
+    }
+    dispatch(fetchAsyncProducts())
+  }, [searchTerm, selectedProductsCategory.category.id,  dispatch])
 
   const handleSearchSubmite = (e) => {
     e.preventDefault();
@@ -36,6 +45,10 @@ const Catalog = ({showSearcField}) => {
   }
 
   const { items, loading, error } = fetchProducts;
+
+  const productsToDisplay = selectedProductsCategory.items.length ? selectedProductsCategory.items : items;
+
+  
 
   if (loading) return <Loader />
   if (error) return <>{error.message}</>
@@ -58,7 +71,7 @@ const Catalog = ({showSearcField}) => {
 
       <div className="row">
         {
-          items.map(item => (
+          productsToDisplay.map(item => (
             <div key={item.id} className="col-4">
               <ItemCard item={item}/>
             </div>

@@ -1,17 +1,28 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { getfetchedCategories } from "../../features/slices/productsSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { getfetchedCategories,
+        fetchAsyncProductsByCategory,
+        setSelectByCategory,
+        getfetchedProductsByCategory
+        } from "../../features/slices/productsSlice";
 import Loader from "../Loader/Loader";
 import './Categories.css'
 
 const Categories = () => {
   const fetchCategories = useSelector(getfetchedCategories);
-
-  const [selected, setSelected] = useState("Все");  
+  const selectedProductsCategory = useSelector(getfetchedProductsByCategory)
+  const dispatch = useDispatch();
   const {items, loading, error} = fetchCategories;
+  const [selected, setSelected] = useState(selectedProductsCategory.category.title || "Все"); 
 
   if (loading) return <Loader />
   if (error) return <>{error}</>
+
+  const handleSelectCategory = (item) => {
+    setSelected(selectedProductsCategory.category.title);
+    dispatch(setSelectByCategory(item));
+    dispatch(fetchAsyncProductsByCategory(item.id))
+  }
 
   return (
     <ul className="catalog-categories nav justify-content-center">
@@ -19,6 +30,7 @@ const Categories = () => {
           items.map((item) => (
             <li key={item.id} className="nav-item">
               <a
+                onClick={(() => handleSelectCategory(item))}
                 className={
                   selected === item.title ? "nav-link active" : "nav-link"
                 }

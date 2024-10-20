@@ -36,9 +36,7 @@ export const fetchAsyncProducts = createAsyncThunk(
   "products/fetchAsyncProducts",
   async (term, { rejectWithValue }) => {
     try {
-      const response = await serverApi.get(
-        !term ? `items` : `items?q=${term}`
-      );
+      const response = await serverApi.get(!term ? `items` : `items?q=${term}`);
       return response.data;
     } catch(err) {
       if (!err.response) {
@@ -54,6 +52,23 @@ export const fetchAsyncProductDetails = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const response = await serverApi.get(`items/${id}`);
+      return response.data;
+    } catch(err) {
+      if (!err.response) {
+        throw err
+      }
+      return rejectWithValue(err.response.data)
+    }
+  }
+);
+
+export const fetchAsyncProductsByCategory = createAsyncThunk(
+  "products/fetchAsyncProductsByCategory",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await serverApi.get(
+        id === 11 ? `items` : `items?categoryId=${id}`
+      );
       return response.data;
     } catch(err) {
       if (!err.response) {
@@ -86,6 +101,12 @@ const initialState = {
     loading: false,
     error: null,
   },
+  selectedCategory: {
+    category: {},
+    items: [],
+    loading: false,
+    error: null,
+  }
 };
 
 const productsSlice = createSlice({
@@ -94,6 +115,10 @@ const productsSlice = createSlice({
   reducers: {
     removeSelectedProduct: (state) => {
       state.selectedProduct = {item: {}, loading: false, error: null }
+    },
+    setSelectByCategory: (state, { payload }) => {
+      state.selectedCategory.category = payload
+      console.log(state.selectedCategory.category)
     },
   },
   extraReducers: (builder) => {
@@ -154,12 +179,28 @@ const productsSlice = createSlice({
       state.fetchCategories.loading = false;
       state.fetchCategories.error = 'Во время запроса карточки товара произошла ошибка';
     })
+
+       //получение данных для отображения фильтра по категориям 
+       .addCase(fetchAsyncProductsByCategory.pending, (state) => {
+        state.selectedCategory.loading = true;
+        state.selectedCategory.error = null;
+      })
+      .addCase(fetchAsyncProductsByCategory.fulfilled, (state, {payload}) => {
+        state.selectedCategory.loading = false;
+        state.products.items = payload;
+        console.log(state.selectedCategory.items)
+      })
+      .addCase(fetchAsyncProductsByCategory.rejected, (state) => {
+        state.selectedCategory.loading = false;
+        state.selectedCategory.error = 'Во время запроса карточек товара произошла ошибка';
+      })
   }
 });
 
-export const { removeSelectedProduct } = productsSlice.actions;
+export const { removeSelectedProduct, setSelectByCategory } = productsSlice.actions;
 export const getTopSales = (state) => state.products.topSales;
 export const getfetchedCategories = (state) => state.products.fetchCategories;
 export const getfetchedProducts = (state) => state.products.products;
 export const getfetchedProductDetails = (state) => state.products.selectedProduct;
+export const getfetchedProductsByCategory = (state) => state.products.selectedCategory;
 export default productsSlice.reducer;
