@@ -79,6 +79,26 @@ export const fetchAsyncProductsByCategory = createAsyncThunk(
   }
 );
 
+export const fetchAsyncMoreProducts = createAsyncThunk(
+  "products/fetchAsyncMoreProducts",
+  async ({id, offset}, { rejectWithValue }) => {
+    try {
+      const response = await serverApi.get(
+        id === 11 ? 
+        `items?offset=6` : 
+        `items?categoryId=${id}&offset=${offset}`
+      );
+      
+      return response.data;
+    } catch(err) {
+      if (!err.response) {
+        throw err
+      }
+      return rejectWithValue(err.response.data)
+    }
+  }
+);
+
 const initialState = {
   cart: {},
   topSales: {
@@ -95,6 +115,8 @@ const initialState = {
     items: [],
     loading: false,
     error: null,
+    button: true,
+
   },
   selectedProduct: {
     item: {},
@@ -118,7 +140,6 @@ const productsSlice = createSlice({
     },
     setSelectByCategory: (state, { payload }) => {
       state.selectedCategory.category = payload
-      console.log(state.selectedCategory.category)
     },
   },
   extraReducers: (builder) => {
@@ -138,7 +159,7 @@ const productsSlice = createSlice({
       state.topSales.error = 'Во время запроса "Хитов продаж" произошла ошибка';
     })
 
-  //получение данных для компонента Categories 
+    //получение данных для компонента Categories 
     .addCase(fetchAsyncCategories.pending, (state) => {
       state.fetchCategories.loading = true;
       state.fetchCategories.error = null;
@@ -180,20 +201,39 @@ const productsSlice = createSlice({
       state.fetchCategories.error = 'Во время запроса карточки товара произошла ошибка';
     })
 
-       //получение данных для отображения фильтра по категориям 
-       .addCase(fetchAsyncProductsByCategory.pending, (state) => {
-        state.selectedCategory.loading = true;
-        state.selectedCategory.error = null;
-      })
-      .addCase(fetchAsyncProductsByCategory.fulfilled, (state, {payload}) => {
-        state.selectedCategory.loading = false;
-        state.products.items = payload;
-        console.log(state.selectedCategory.items)
-      })
-      .addCase(fetchAsyncProductsByCategory.rejected, (state) => {
-        state.selectedCategory.loading = false;
-        state.selectedCategory.error = 'Во время запроса карточек товара произошла ошибка';
-      })
+    //получение данных для отображения фильтра по категориям 
+    .addCase(fetchAsyncProductsByCategory.pending, (state) => {
+      state.products.loading = true;
+      state.products.error = null;
+    })
+    .addCase(fetchAsyncProductsByCategory.fulfilled, (state, {payload}) => {
+      state.selectedCategory.loading = false;
+      state.products.button = true;
+      state.products.items = payload;
+    })
+    .addCase(fetchAsyncProductsByCategory.rejected, (state) => {
+      state.selectedCategory.loading = false;
+      state.selectedCategory.error = 'Во время запроса карточек товара произошла ошибка';
+    })
+
+     //получение дополнительных товаров по выбранной категории 
+     .addCase(fetchAsyncMoreProducts.pending, (state) => {
+      state.products.loading = true;
+      state.products.error = null;
+    })
+    .addCase(fetchAsyncMoreProducts.fulfilled, (state, {payload}) => {
+      state.products.loading = false;
+      state.products.items = [...state.products.items, ...payload];
+
+      if (payload.length < 6) {
+        state.products.button = false
+      }
+     
+    })
+    .addCase(fetchAsyncMoreProducts.rejected, (state) => {
+      state.selectedCategory.loading = false;
+      state.selectedCategory.error = 'Во время запроса карточек товара произошла ошибка';
+    })
   }
 });
 

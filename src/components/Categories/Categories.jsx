@@ -15,14 +15,16 @@ const Categories = () => {
   const {items, loading, error} = fetchCategories;
   const [selected, setSelected] = useState(selectedProductsCategory.category.title || "Все"); 
 
-  if (loading) return <Loader />
-  if (error) return <>{error}</>
-
   const handleSelectCategory = (item) => {
     setSelected(selectedProductsCategory.category.title);
     dispatch(setSelectByCategory(item));
     dispatch(fetchAsyncProductsByCategory(item.id))
   }
+
+  
+
+  if (loading) return <Loader />
+  if (error) return <>{error}</>
 
   return (
     <ul className="catalog-categories nav justify-content-center">
@@ -34,7 +36,7 @@ const Categories = () => {
                 className={
                   selected === item.title ? "nav-link active" : "nav-link"
                 }
-                href="#"
+                // href="#"
               >
                 {item.title}
               </a>
