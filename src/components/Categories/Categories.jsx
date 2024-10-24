@@ -16,7 +16,7 @@ const Categories = () => {
   const [selected, setSelected] = useState(selectedProductsCategory.category.title || "Все"); 
 
   const handleSelectCategory = (item) => {
-    setSelected(selectedProductsCategory.category.title);
+    setSelected(item.title);
     dispatch(setSelectByCategory(item));
     dispatch(fetchAsyncProductsByCategory(item.id))
   }

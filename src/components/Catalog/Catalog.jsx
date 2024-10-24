@@ -13,6 +13,7 @@ import ItemCard from "../ItemCard/ItemCard";
 import Categories from "../Categories/Categories";
 import Loader from "../Loader/Loader";
 import SearchForm from "../SearchForm/SearchForm"; 
+import ErrorInfo from '../ErrorInfo/ErrorInfo'
 import './Catalog.css'
 
 
@@ -29,16 +30,23 @@ const Catalog = ({showSearcField}) => {
 
   useEffect(() => {
     if (searchTerm) {
-      setTerm(searchTerm)
-      dispatch(fetchAsyncProducts(searchTerm))
+      setTerm(searchTerm);
+      dispatch(fetchAsyncProducts(searchTerm));
     }
+  }, [searchTerm, dispatch]);
+  
+  useEffect(() => {
     if (selectedProductsCategory.category.id) {
-      dispatch(fetchAsyncProductsByCategory(selectedProductsCategory.category.id))
-      
-      dispatch(fetchAsyncMoreProducts(selectedProductsCategory.category.id))
+      dispatch(fetchAsyncProductsByCategory(selectedProductsCategory.category.id));
+      dispatch(fetchAsyncMoreProducts(selectedProductsCategory.category.id));
     }
-    dispatch(fetchAsyncProducts())
-  }, [searchTerm, selectedProductsCategory.category.id,  dispatch])
+  }, [selectedProductsCategory.category.id, dispatch]);
+  
+  useEffect(() => {
+    if (!searchTerm && !selectedProductsCategory.category.id) {
+      dispatch(fetchAsyncProducts());
+    }
+  }, [dispatch]);
 
   const handleSearchSubmite = (e) => {
     e.preventDefault();
@@ -50,17 +58,18 @@ const Catalog = ({showSearcField}) => {
     const categoryId = selectedProductsCategory.category.id || 11;
     dispatch(fetchAsyncMoreProducts({ id: categoryId, offset }));
     setOffset(prevOffset => prevOffset + 6);
+
   }
 
-  const { items, loading, error, button, countRequest } = fetchProducts;
+  const { items, loading, error, button } = fetchProducts;
 
   const productsToDisplay = 
     selectedProductsCategory.items.length ? 
     selectedProductsCategory.items : 
     items;
 
-  if (loading) return <Loader />
-  if (error) return <>{error.message}</>
+ 
+  // if (error) return <ErrorInfo error={error}/>
 
   return (
     <section className="catalog">
@@ -78,15 +87,18 @@ const Catalog = ({showSearcField}) => {
 
       <Categories />
 
-      <div className="row">
-        {
-          productsToDisplay.map(item => (
+      
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="row">
+          {productsToDisplay.map((item) => (
             <div key={item.id} className="col-4">
-              <ItemCard item={item}/>
+              <ItemCard item={item} />
             </div>
-          ))
-        }
-      </div>
+          ))}
+        </div>
+      )}
 
       <div className="text-center">
         
