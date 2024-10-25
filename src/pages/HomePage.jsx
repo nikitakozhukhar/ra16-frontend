@@ -19,10 +19,10 @@ const HomePage = () => {
   }, [dispatch])
 
   return (
-    <div>
+    <>
       <TopSales />
       <Catalog showSearcField={false}/> 
-    </div>
+    </>
   );
 };
 

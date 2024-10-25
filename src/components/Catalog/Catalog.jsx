@@ -91,7 +91,7 @@ const Catalog = ({showSearcField}) => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="row">
+        <div className="row catalog-row">
           {productsToDisplay.map((item) => (
             <div key={item.id} className="col-4">
               <ItemCard item={item} />

@@ -7,8 +7,11 @@ const ItemCard = (props) => {
 
   return (
     <div className="card catalog-item-card">
+
+      <div className="img-wrapper">
+        <img src={images[0]} className="card-img-top img-fluid" alt={title} />
+      </div>
      
-      <img src={images[0]} className="card-img-top img-fluid" alt={title} />
       <div className="card-body">
         <p className="card-text">{title}</p>
         <p className="card-text">{price} руб.</p>
