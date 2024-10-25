@@ -1,7 +1,7 @@
 .catalog-item-card {
   display: flex;
   flex-direction: column;
-  width: 28vw;
+  width: 18vw;
   padding: 15px;
   border: 1px solid lightgray;
 }
@@ -28,20 +28,3 @@
 .card-text {
   margin-bottom: 15px;
 }
-
-
-
-/**/
-
-/* 
-
-.card-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 10px;
-}
-
-.card-text {
-  margin: 0;
-} */
