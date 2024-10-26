@@ -35,7 +35,7 @@ const Header = () => {
  
   return (
     <header className="container">
-      <div className="row">
+      <div className="row header-row">
         <div className="col">
           <nav className="navbar navbar-expand-sm navbar-light bg-light">
             <Link to='/' className="navbar-brand" >

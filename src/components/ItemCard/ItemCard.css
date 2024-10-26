@@ -1,7 +1,8 @@
 .catalog-item-card {
   display: flex;
   flex-direction: column;
-  width: 18vw;
+  width: 20vw;
+  height: 450px;
   padding: 15px;
   border: 1px solid lightgray;
 }

@@ -1,9 +1,10 @@
 .catalog-row {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-around;
   flex-wrap: wrap;
+  min-height: 300px;
 }
 .col-4 {
   align-self: flex-end;
-  flex-basis: 33%;
+  flex-basis: 21vw;
 }
