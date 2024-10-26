@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { getfetchedCategories,
         fetchAsyncProductsByCategory,
         setSelectByCategory,
-        getfetchedProductsByCategory
+        getfetchedProductsByCategory,
+        fetchAsyncCategories
         } from "../../features/slices/productsSlice";
 import Loader from "../Loader/Loader";
+import ErrorHandler from '../ErrorHandler/ErrorHandler'
 import './Categories.css'
 
 const Categories = () => {
@@ -21,14 +23,20 @@ const Categories = () => {
     dispatch(fetchAsyncProductsByCategory(item.id))
   }
 
-  
+  const refetchAsyncData = () => {
+    dispatch(fetchAsyncCategories())
+  }
 
   if (loading) return <Loader />
-  if (error) return <>{error}</>
 
   return (
     <ul className="catalog-categories nav justify-content-center">
-        {
+       {
+        error ? 
+        (<ErrorHandler 
+            error={error} 
+            refetchAsyncData={refetchAsyncData}/>) : 
+        ( 
           items.map((item) => (
             <li key={item.id} className="nav-item">
               <a
@@ -42,7 +50,8 @@ const Categories = () => {
               </a>
             </li>
           ))
-        }
+        )
+       }
       </ul>
   );
 };

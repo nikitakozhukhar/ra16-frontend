@@ -13,7 +13,7 @@ import ItemCard from "../ItemCard/ItemCard";
 import Categories from "../Categories/Categories";
 import Loader from "../Loader/Loader";
 import SearchForm from "../SearchForm/SearchForm"; 
-import ErrorInfo from '../ErrorInfo/ErrorInfo'
+import ErrorHandler from '../ErrorHandler/ErrorHandler'
 import './Catalog.css'
 
 
@@ -69,7 +69,7 @@ const Catalog = ({showSearcField}) => {
     items;
 
  
-  // if (error) return <ErrorInfo error={error}/>
+  // if (error) return <ErrorHandler error={error}/>
 
   return (
     <section className="catalog">

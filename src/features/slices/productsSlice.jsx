@@ -102,7 +102,6 @@ export const fetchAsyncMoreProducts = createAsyncThunk(
 );
 
 const initialState = {
-  cart: {},
   topSales: {
     items: [],
     loading: false,
@@ -158,7 +157,7 @@ const productsSlice = createSlice({
     })
     .addCase(fetchAsyncTopSales.rejected, (state, { error }) => {
       state.topSales.loading = false;
-      state.topSales.error = 'Во время запроса "Хитов продаж" произошла ошибка';
+      state.topSales.error = error.message || 'Во время запроса "Хитов продаж" произошла ошибка';
     })
 
     //получение данных для компонента Categories 
@@ -184,9 +183,9 @@ const productsSlice = createSlice({
       state.products.loading = false;
       state.products.items = payload
     })
-    .addCase(fetchAsyncProducts.rejected, (state) => {
+    .addCase(fetchAsyncProducts.rejected, (state, { error }) => {
       state.fetchCategories.loading = false;
-      state.fetchCategories.error = 'Во время запроса товаров произошла ошибка';
+      state.fetchCategories.error = error.message || 'Во время запроса карточек товаров произошла ошибка';
     })
 
     //получение данных для компонента ItemCardDetails 
@@ -198,9 +197,9 @@ const productsSlice = createSlice({
       state.selectedProduct.loading = false;
       state.selectedProduct.item = payload;
     })
-    .addCase(fetchAsyncProductDetails.rejected, (state) => {
+    .addCase(fetchAsyncProductDetails.rejected, (state, { error }) => {
       state.fetchCategories.loading = false;
-      state.fetchCategories.error = 'Во время запроса карточки товара произошла ошибка';
+      state.fetchCategories.error = error.message || 'Во время запроса дополнительной информации произошла ошибка';
     })
 
     //получение данных для отображения фильтра по категориям 
@@ -213,9 +212,9 @@ const productsSlice = createSlice({
       state.products.button = true;
       state.products.items = payload;
     })
-    .addCase(fetchAsyncProductsByCategory.rejected, (state) => {
+    .addCase(fetchAsyncProductsByCategory.rejected, (state, { error }) => {
       state.selectedCategory.loading = false;
-      state.selectedCategory.error = 'Во время запроса карточек товара произошла ошибка';
+      state.selectedCategory.error = error.message || 'Во время запроса карточек по выбранному фильтру товара произошла ошибка';
     })
 
      //получение дополнительных товаров по выбранной категории 
@@ -232,9 +231,9 @@ const productsSlice = createSlice({
       }
      
     })
-    .addCase(fetchAsyncMoreProducts.rejected, (state) => {
+    .addCase(fetchAsyncMoreProducts.rejected, (state, { error }) => {
       state.selectedCategory.loading = false;
-      state.selectedCategory.error = 'Во время запроса карточек товара произошла ошибка';
+      state.selectedCategory.error = error.message || 'Во время дополнительного запроса карточек товаров произошла ошибка';
     })
   }
 });
