@@ -117,7 +117,6 @@ const initialState = {
     loading: false,
     error: null,
     button: true,
-
   },
   selectedProduct: {
     item: {},
@@ -232,8 +231,8 @@ const productsSlice = createSlice({
      
     })
     .addCase(fetchAsyncMoreProducts.rejected, (state, { error }) => {
-      state.selectedCategory.loading = false;
-      state.selectedCategory.error = error.message || 'Во время дополнительного запроса карточек товаров произошла ошибка';
+      state.products.loading = false;
+      state.products.error = error.message || 'Во время дополнительного запроса карточек товаров произошла ошибка';
     })
   }
 });

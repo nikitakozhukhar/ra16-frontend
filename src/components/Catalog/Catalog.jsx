@@ -23,6 +23,7 @@ const Catalog = ({ showSearcField }) => {
   const selectedProductsCategory = useSelector(getfetchedProductsByCategory);
   const [term, setTerm] = useState(searchTerm);
   const [offset, setOffset] = useState(6);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   const fieldStyle = "catalog-search-form form-inline";
 
@@ -55,9 +56,11 @@ const Catalog = ({ showSearcField }) => {
   };
 
   const handleMoreProducts = () => {
+    setLoadingMore(true);
     const categoryId = selectedProductsCategory.category.id || 11;
     dispatch(fetchAsyncMoreProducts({ id: categoryId, offset }));
     setOffset((prevOffset) => prevOffset + 6);
+    setLoadingMore(false);
   };
 
   const { items, loading, error, button } = fetchProducts;
@@ -65,7 +68,6 @@ const Catalog = ({ showSearcField }) => {
   const productsToDisplay = selectedProductsCategory.items.length
     ? selectedProductsCategory.items
     : items;
-
 
   return (
     <section className="catalog">
@@ -82,9 +84,10 @@ const Catalog = ({ showSearcField }) => {
 
       <Categories />
 
-      {loading ? (
-        <Loader />
-      ) : (
+      {error ? (
+        <ErrorHandler error={error} refetchAsyncData={() =>  dispatch(fetchAsyncProducts())}/>
+      ) :
+      (
         <>
           <div className="row catalog-row">
             {productsToDisplay.map((item) => (
@@ -95,14 +98,16 @@ const Catalog = ({ showSearcField }) => {
           </div>
           <div className="text-center">
             {button && (
-              <button
+              loading ? (<Loader />) :
+              (<button
                 onClick={handleMoreProducts}
                 className="btn btn-outline-primary"
               >
                 Загрузить ещё
-              </button>
+              </button>)
+              
             )}
-          </div>{" "}
+          </div>
         </>
       )}
     </section>
