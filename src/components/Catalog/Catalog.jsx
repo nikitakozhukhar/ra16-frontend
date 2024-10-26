@@ -23,7 +23,6 @@ const Catalog = ({ showSearcField }) => {
   const selectedProductsCategory = useSelector(getfetchedProductsByCategory);
   const [term, setTerm] = useState(searchTerm);
   const [offset, setOffset] = useState(6);
-  const [loadingMore, setLoadingMore] = useState(false);
 
   const fieldStyle = "catalog-search-form form-inline";
 
@@ -56,11 +55,11 @@ const Catalog = ({ showSearcField }) => {
   };
 
   const handleMoreProducts = () => {
-    setLoadingMore(true);
+  
     const categoryId = selectedProductsCategory.category.id || 11;
     dispatch(fetchAsyncMoreProducts({ id: categoryId, offset }));
     setOffset((prevOffset) => prevOffset + 6);
-    setLoadingMore(false);
+   
   };
 
   const { items, loading, error, button } = fetchProducts;

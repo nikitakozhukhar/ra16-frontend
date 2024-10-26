@@ -7,7 +7,7 @@ import {
   removeSelectedProduct,
 } from "../../features/slices/productsSlice";
 import { addProductInCart, 
-        addCountProduct
+        addProductCount
  } from '../../features/slices/cartSlice'
 import { useEffect, useState } from "react";
 import Loader from "../Loader/Loader";
@@ -31,7 +31,7 @@ export default function ItemCardDetails() {
       if (productCount !== 10) {
        return prev + 1
       }
-      if (productCount == 10) {
+      if (productCount === 10) {
         setProductCount(10)
       }
     })
@@ -145,8 +145,8 @@ export default function ItemCardDetails() {
               {sizes && (
                 <button 
                   onClick={() => {
-                    dispatch(addProductInCart(item))
-                    dispatch(addCountProduct(productCount))
+                    dispatch(addProductInCart({...item, quantity: productCount}))
+                    dispatch(addProductCount(productCount))
                   }}
                   className={selected ? "btn btn-danger btn-lg" : "btn btn-block btn-lg"}>
                   В корзину
