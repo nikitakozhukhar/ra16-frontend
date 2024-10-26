@@ -6,14 +6,48 @@ import {
   getfetchedProductDetails,
   removeSelectedProduct,
 } from "../../features/slices/productsSlice";
-import { useEffect } from "react";
+import { addProductInCart, 
+        getCartItems
+ } from '../../features/slices/cartSlice'
+import { useEffect, useState } from "react";
 import Loader from "../Loader/Loader";
 
 export default function ItemCardDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const details = useSelector(getfetchedProductDetails);
+  const cart = useSelector(getCartItems)
+  const [selected, setSelected] = useState(false);
+  const [productCount, setProductCount] = useState(1)
   const { item, loading, error } = details;
+
+  let sizes = null;
+
+  const handleSelect = () => {
+    setSelected(!selected);
+  };
+
+  const handleIncreaseProductCount = () => {
+    setProductCount(prev => {
+      if (productCount !== 10) {
+       return prev + 1
+      }
+      if (productCount == 10) {
+        setProductCount(10)
+      }
+    })
+  }
+
+  const handleDecreaseProductCount = () => {
+    setProductCount(prev => {
+      if (productCount !== 1) {
+       return prev - 1
+      }
+      if (productCount === 1) {
+        setProductCount(1)
+      }
+    })
+  }
 
   useEffect(() => {
     dispatch(fetchAsyncProductDetails(id));
@@ -25,7 +59,11 @@ export default function ItemCardDetails() {
 
   if (loading) return <Loader />;
   if (error) return <>{error}</>;
-  
+
+  if (item.sizes) {
+    sizes = item.sizes;
+  }
+
   return (
     <section className="catalog-item">
       {
@@ -74,22 +112,47 @@ export default function ItemCardDetails() {
               </table>
               <div className="text-center">
                 <p>
-                  Размеры в наличии:{" "}
-                  <span className="catalog-item-size selected">18 US</span>{" "}
-                  <span className="catalog-item-size">20 US</span>
+                  Размеры в наличии:
+                  {item.sizes &&
+                    sizes.map((size, index) =>
+                      size.available ? (
+                        <span
+                          key={index}
+                          onClick={handleSelect}
+                          className={
+                            selected
+                              ? "catalog-item-size selected"
+                              : "catalog-item-size"
+                          }
+                        >
+                          {size.size}
+                        </span>
+                      ) : null
+                    )}
                 </p>
                 <p>
-                  Количество:{" "}
+                  Количество:
                   <span className="btn-group btn-group-sm pl-2">
-                    <button className="btn btn-secondary">-</button>
-                    <span className="btn btn-outline-primary">1</span>
-                    <button className="btn btn-secondary">+</button>
+                    <button 
+                      onClick={handleDecreaseProductCount}
+                      className="btn btn-secondary">-</button>
+                    <span className="btn btn-outline-primary">{productCount}</span>
+                    <button 
+                      onClick={handleIncreaseProductCount}
+                      className="btn btn-secondary">+</button>
                   </span>
                 </p>
               </div>
-              <button className="btn btn-danger btn-block btn-lg">
-                В корзину
-              </button>
+              {sizes && (
+                <button 
+                  onClick={() => {
+                    dispatch(addProductInCart(item))
+                    console.log(cart)
+                  }}
+                  className={selected ? "btn btn-danger btn-lg" : "btn btn-block btn-lg"}>
+                  В корзину
+                </button>
+              ) }
             </div>
           </div>
         </>
@@ -97,3 +160,6 @@ export default function ItemCardDetails() {
     </section>
   );
 }
+
+// "btn btn-danger btn-block btn-lg"
+// console.log(item.sizes)

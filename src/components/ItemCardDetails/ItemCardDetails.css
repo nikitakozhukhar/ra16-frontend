@@ -21,13 +21,56 @@ td {
 }
 
 .row-details {
+  display: flex;
   flex-wrap: nowrap;
+}
+
+.col-5, .col-7 {
+  padding: 10px;
 }
 
 .col-5 img {
   width: 30vw;
+  height: 400px;
+  object-fit: contain; 
 }
 
 .catalog-item-size {
   margin-bottom: 20px;
+}
+
+.btn-group, .btn-group-sm, .pl-2 {
+  display: inline-block;
+  height: 51px;
+}
+
+.btn .btn-secondary, .btn .btn-outline-primary {
+  display: inline-block;
+  width: 35px;
+  height: 100%;
+}
+
+.btn .btn-secondary {
+  color: white;
+  background-color: #6c757c;
+} 
+
+.catalog-item-size {
+  cursor: pointer;
+}
+
+.btn-block, .btn-danger {
+  width: 100%;
+  height: 50px;
+  background-color: #e87d87;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 1em;
+  cursor: auto;
+}
+
+.btn-danger {
+  background-color: #dc3644;
+  cursor: pointer;
 }
