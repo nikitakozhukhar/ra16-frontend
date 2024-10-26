@@ -7,7 +7,7 @@ import {
   removeSelectedProduct,
 } from "../../features/slices/productsSlice";
 import { addProductInCart, 
-        getCartItems
+        addCountProduct
  } from '../../features/slices/cartSlice'
 import { useEffect, useState } from "react";
 import Loader from "../Loader/Loader";
@@ -16,7 +16,6 @@ export default function ItemCardDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const details = useSelector(getfetchedProductDetails);
-  const cart = useSelector(getCartItems)
   const [selected, setSelected] = useState(false);
   const [productCount, setProductCount] = useState(1)
   const { item, loading, error } = details;
@@ -147,7 +146,7 @@ export default function ItemCardDetails() {
                 <button 
                   onClick={() => {
                     dispatch(addProductInCart(item))
-                    console.log(cart)
+                    dispatch(addCountProduct(productCount))
                   }}
                   className={selected ? "btn btn-danger btn-lg" : "btn btn-block btn-lg"}>
                   В корзину
@@ -160,6 +159,3 @@ export default function ItemCardDetails() {
     </section>
   );
 }
-
-// "btn btn-danger btn-block btn-lg"
-// console.log(item.sizes)

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSearchTerm } from "../../features/slices/searchSlice";
 import { fetchAsyncProducts } from "../../features/slices/productsSlice";
+import { getCountProduct } from '../../features/slices/cartSlice'
 
 import SearchForm from "../SearchForm/SearchForm";
 import "./Header.css";
@@ -14,6 +15,9 @@ const Header = () => {
   const [term, setTerm] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const count = useSelector(getCountProduct);
+
+  console.log(count)
   
   const fieldStyle  = "header-controls-search-form form-inline"
 
@@ -73,10 +77,13 @@ const Header = () => {
                     className="header-controls-pic header-controls-search"
                     onClick={() => handleOpenSerchFild()}
                   />
-                  <div className="header-controls-pic header-controls-cart">
-                    {/* <div className="header-controls-cart-full">1</div> */}
-                    <div className="header-controls-cart-menu" />
-                  </div>
+                  <Link to='/cart'>
+                    <div className="header-controls-pic header-controls-cart">
+                      <div className="header-controls-cart-full">{count}</div>
+                      <div className="header-controls-cart-menu" />
+                    </div>
+                  </Link>
+                  
                   
                 </div>
                 {isOpen ? <SearchForm 

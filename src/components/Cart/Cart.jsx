@@ -1,6 +1,14 @@
 import "./Cart.css";
+import { useDispatch, useSelector } from "react-redux";
+import { getCartItems } from '../../features/slices/cartSlice'
+import { useEffect, useState } from "react";
 
 export default function Cart() {
+  const cart = useSelector(getCartItems)
+  const { products } = cart;
+
+  console.log(products)
+
   return (
     <section className="cart">
       <h2 className="text-center">Корзина</h2>
