@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchTerm } from "../../features/slices/searchSlice";
 import { fetchAsyncProducts } from "../../features/slices/productsSlice";
-import { getProductCount, getCartState } from '../../features/slices/cartSlice'
+import { getCartState } from '../../features/slices/cartSlice'
 import SearchForm from "../SearchForm/SearchForm";
 import "./Header.css";
 
@@ -12,7 +12,6 @@ const Header = () => {
   const [term, setTerm] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const productCount = useSelector(getProductCount);
   const cart = useSelector(getCartState)
 
   let quantity;
@@ -20,11 +19,6 @@ const Header = () => {
   if (cart.products.length > 0) {
     quantity = cart.products.length
   }
-  // Нужно сделать проверку на наличие товаров в корзине, иначе выпадает ошибка
-  // const { quantity } = cart.products;
-  // if (cart.length > 0) {
-   
-  // }
 
   const fieldStyle = "header-controls-search-form form-inline";
 

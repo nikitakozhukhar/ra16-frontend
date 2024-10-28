@@ -8,7 +8,6 @@ import {
 } from "../../features/slices/productsSlice";
 import {
   addProductInCart,
-  addProductCount,
 } from "../../features/slices/cartSlice";
 import { useEffect, useState } from "react";
 import Loader from "../Loader/Loader";
@@ -158,7 +157,6 @@ export default function ItemCardDetails() {
                       dispatch(
                         addProductInCart({ ...item, quantity: productCount })
                       );
-                      dispatch(addProductCount(productCount));
                     }}
                     className={
                       selected
