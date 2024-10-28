@@ -17,12 +17,8 @@ const Header = () => {
 
   let quantity;
 
-  console.log(cart)
-
   if (cart.products.length > 0) {
-    console.log(cart.products[0].quantity)
-    console.log(cart.products.length)
-    quantity = cart.products
+    quantity = cart.products.length
   }
   // Нужно сделать проверку на наличие товаров в корзине, иначе выпадает ошибка
   // const { quantity } = cart.products;
