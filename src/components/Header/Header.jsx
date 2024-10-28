@@ -12,15 +12,23 @@ const Header = () => {
   const [term, setTerm] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const productCount = useSelector(getProductCount);
+  const productCount = useSelector(getProductCount);
   const cart = useSelector(getCartState)
+
+  let quantity;
+
+  console.log(cart)
+
+  if (cart.products.length > 0) {
+    console.log(cart.products[0].quantity)
+    console.log(cart.products.length)
+    quantity = cart.products
+  }
   // Нужно сделать проверку на наличие товаров в корзине, иначе выпадает ошибка
-  const { quantity } = cart.products;
+  // const { quantity } = cart.products;
   // if (cart.length > 0) {
    
   // }
-  
-  console.log( quantity )
 
   const fieldStyle = "header-controls-search-form form-inline";
 

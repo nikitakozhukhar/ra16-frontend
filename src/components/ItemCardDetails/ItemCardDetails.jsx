@@ -1,14 +1,15 @@
 import "./ItemCardDetails.css";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAsyncProductDetails,
   getfetchedProductDetails,
   removeSelectedProduct,
 } from "../../features/slices/productsSlice";
-import { addProductInCart, 
-        addProductCount
- } from '../../features/slices/cartSlice'
+import {
+  addProductInCart,
+  addProductCount,
+} from "../../features/slices/cartSlice";
 import { useEffect, useState } from "react";
 import Loader from "../Loader/Loader";
 
@@ -17,7 +18,7 @@ export default function ItemCardDetails() {
   const dispatch = useDispatch();
   const details = useSelector(getfetchedProductDetails);
   const [selected, setSelected] = useState(false);
-  const [productCount, setProductCount] = useState(1)
+  const [productCount, setProductCount] = useState(1);
   const { item, loading, error } = details;
 
   let sizes = null;
@@ -27,26 +28,26 @@ export default function ItemCardDetails() {
   };
 
   const handleIncreaseProductCount = () => {
-    setProductCount(prev => {
+    setProductCount((prev) => {
       if (productCount !== 10) {
-       return prev + 1
+        return prev + 1;
       }
       if (productCount === 10) {
-        setProductCount(10)
+        setProductCount(10);
       }
-    })
-  }
+    });
+  };
 
   const handleDecreaseProductCount = () => {
-    setProductCount(prev => {
+    setProductCount((prev) => {
       if (productCount !== 1) {
-       return prev - 1
+        return prev - 1;
       }
       if (productCount === 1) {
-        setProductCount(1)
+        setProductCount(1);
       }
-    })
-  }
+    });
+  };
 
   useEffect(() => {
     dispatch(fetchAsyncProductDetails(id));
@@ -132,26 +133,43 @@ export default function ItemCardDetails() {
                 <p>
                   Количество:
                   <span className="btn-group btn-group-sm pl-2">
-                    <button 
+                    <button
                       onClick={handleDecreaseProductCount}
-                      className="btn btn-secondary">-</button>
-                    <span className="btn btn-outline-primary">{productCount}</span>
-                    <button 
+                      className="btn btn-secondary"
+                    >
+                      -
+                    </button>
+                    <span className="btn btn-outline-primary">
+                      {productCount}
+                    </span>
+                    <button
                       onClick={handleIncreaseProductCount}
-                      className="btn btn-secondary">+</button>
+                      className="btn btn-secondary"
+                    >
+                      +
+                    </button>
                   </span>
                 </p>
               </div>
               {sizes && (
-                <button 
-                  onClick={() => {
-                    dispatch(addProductInCart({...item, quantity: productCount}))
-                    dispatch(addProductCount(productCount))
-                  }}
-                  className={selected ? "btn btn-danger btn-lg" : "btn btn-block btn-lg"}>
-                  В корзину
-                </button>
-              ) }
+                <Link to="/cart">
+                  <button
+                    onClick={() => {
+                      dispatch(
+                        addProductInCart({ ...item, quantity: productCount })
+                      );
+                      dispatch(addProductCount(productCount));
+                    }}
+                    className={
+                      selected
+                        ? "btn btn-danger btn-lg"
+                        : "btn btn-block btn-lg"
+                    }
+                  >
+                    В корзину
+                  </button>
+                </Link>
+              )}
             </div>
           </div>
         </>

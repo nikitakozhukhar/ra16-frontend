@@ -7,7 +7,7 @@ export default function Cart() {
   const cart = useSelector(getCartItems)
   const { products } = cart;
 
-  console.log(products)
+  // console.log(cart.products)
 
   return (
     <section className="cart">
