@@ -1,13 +1,18 @@
 import "./Cart.css";
-import { useDispatch, useSelector } from "react-redux";
-import { getCartItems } from '../../features/slices/cartSlice'
-import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { getCartItems } from "../../features/slices/cartSlice";
 
 export default function Cart() {
-  const cart = useSelector(getCartItems)
+  const cart = useSelector(getCartItems);
+
   const { products } = cart;
 
-  // console.log(cart.products)
+  // console.log(products)
+
+  const totalPrice = products.reduce((sum, product) => {
+    return sum + product.price * product.quantity;
+  }, 0);
 
   return (
     <section className="cart">
@@ -25,24 +30,30 @@ export default function Cart() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td scope="row">1</td>
-            <td>
-              <a href="/products/1.html">Босоножки 'MYER'</a>
-            </td>
-            <td>18 US</td>
-            <td>1</td>
-            <td>34 000 руб.</td>
-            <td>34 000 руб.</td>
-            <td>
-              <button className="btn btn-outline-danger btn-sm">Удалить</button>
-            </td>
-          </tr>
+          {products.map((product, index) => {
+            return (
+              <tr key={product.id}>
+                <td scope="row">{index + 1}</td>
+                <td>
+                  <Link to={`/catalog/${product.id}`}>{product.title}</Link>
+                </td>
+                <td>18</td>
+                <td>{product.quantity}</td>
+                <td>{product.price}</td>
+                <td>{product.price * product.quantity}</td>
+                <td>
+                  <button className="btn btn-outline-danger btn-sm">
+                    Удалить
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
           <tr>
             <td colSpan={5} className="text-right">
               Общая стоимость
             </td>
-            <td>34 000 руб.</td>
+            <td>{totalPrice}</td>
           </tr>
         </tbody>
       </table>
