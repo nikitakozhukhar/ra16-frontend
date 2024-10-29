@@ -16,14 +16,14 @@ export default function ItemCardDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const details = useSelector(getfetchedProductDetails);
-  const [selected, setSelected] = useState(false);
+  const [selectedSize, setSelectedSize] = useState(false);
   const [productCount, setProductCount] = useState(1);
   const { item, loading, error } = details;
 
   let sizes = null;
 
-  const handleSelect = () => {
-    setSelected(!selected);
+  const handleSizeSelect = (size) => {
+    setSelectedSize(size);
   };
 
   const handleIncreaseProductCount = () => {
@@ -117,9 +117,9 @@ export default function ItemCardDetails() {
                       size.available ? (
                         <span
                           key={index}
-                          onClick={handleSelect}
+                          onClick={() => handleSizeSelect(size.size)}
                           className={
-                            selected
+                            selectedSize === size.size
                               ? "catalog-item-size selected"
                               : "catalog-item-size"
                           }
@@ -155,14 +155,19 @@ export default function ItemCardDetails() {
                   <button
                     onClick={() => {
                       dispatch(
-                        addProductInCart({ ...item, quantity: productCount })
+                        addProductInCart(
+                          { ...item, 
+                            quantity: productCount,
+                            selectedSize: selectedSize, 
+                          })
                       );
                     }}
                     className={
-                      selected
+                      selectedSize
                         ? "btn btn-danger btn-lg"
                         : "btn btn-block btn-lg"
                     }
+                    disabled={!selectedSize} 
                   >
                     В корзину
                   </button>

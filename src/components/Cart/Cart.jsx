@@ -38,7 +38,7 @@ export default function Cart() {
                 <td>
                   <Link to={`/catalog/${product.id}`}>{product.title}</Link>
                 </td>
-                <td>18</td>
+                <td>{product.selectedSize}</td>
                 <td>{product.quantity}</td>
                 <td>{product.price}</td>
                 <td>{product.price * product.quantity}</td>
