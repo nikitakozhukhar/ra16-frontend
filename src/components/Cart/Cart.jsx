@@ -1,10 +1,11 @@
 import "./Cart.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { getCartItems } from "../../features/slices/cartSlice";
+import { getCartItems, deleteProduct } from "../../features/slices/cartSlice";
 
 export default function Cart() {
   const cart = useSelector(getCartItems);
+  const dispatch = useDispatch();
 
   const { products } = cart;
 
@@ -42,7 +43,9 @@ export default function Cart() {
                 <td>{product.price}</td>
                 <td>{product.price * product.quantity}</td>
                 <td>
-                  <button className="btn btn-outline-danger btn-sm">
+                  <button 
+                    onClick={() => dispatch(deleteProduct(product.id))}
+                    className="btn btn-outline-danger btn-sm">
                     Удалить
                   </button>
                 </td>
