@@ -1,6 +1,7 @@
 import "./Cart.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import OrderForm from '../OrderForm/OrderForm'
 import { getCartItems, deleteProduct } from "../../features/slices/cartSlice";
 
 export default function Cart() {
@@ -60,6 +61,10 @@ export default function Cart() {
           </tr>
         </tbody>
       </table>
+
+      <OrderForm />
+
+    
     </section>
   );
 }

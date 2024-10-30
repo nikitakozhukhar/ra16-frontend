@@ -1,0 +1,46 @@
+.order-card {
+  display: flex;
+  flex-direction: column;
+  max-width: 30rem;
+  margin: 0 auto;
+  padding: 15px; 
+  border-radius: 10px;
+  border: 1px solid #efefef;
+  font-size: 0.8em;
+}
+
+.card-order-body {
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-check {
+  display: flex;
+  gap: 10px;
+}
+
+.form-control {
+  height: 40px;
+  font-size: 1em;
+  border-radius: 5px;
+  border: 1px solid #efefef;
+}
+
+.form-control:focus {
+  outline: 3px solid #efefef;
+}
+
+.btn-outline-secondary {
+  background-color: #fefefe;
+  border: 1px solid #efefef;
+}
+
+.btn-outline-secondary:hover {
+  color: black;
+  background-color: #efefef;
+}
