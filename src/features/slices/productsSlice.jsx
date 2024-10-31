@@ -1,13 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import serverApi from "../../common/apis/serverApi";
 
-const BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
 export const fetchAsyncTopSales = createAsyncThunk(
   "products/fetchAsyncTopSales",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await serverApi.get(`${BASE_URL}top-sales`);
+      const response = await serverApi.get(`top-sales`);
       return response.data;
     } catch(err) {
       if (!err.response) {
@@ -23,7 +21,7 @@ export const fetchAsyncCategories = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     
       try {
-        const response = await serverApi.get(`${BASE_URL}categories`);
+        const response = await serverApi.get(`categories`);
         return response.data;
       } catch(err) {
         if (!err.response) {
@@ -38,7 +36,7 @@ export const fetchAsyncProducts = createAsyncThunk(
   "products/fetchAsyncProducts",
   async (term, { rejectWithValue }) => {
     try {
-      const response = await serverApi.get(!term ? `${BASE_URL}items` : `${BASE_URL}items?q=${term}`);
+      const response = await serverApi.get(!term ? `items` : `items?q=${term}`);
       return response.data;
     } catch(err) {
       if (!err.response) {
@@ -53,7 +51,7 @@ export const fetchAsyncProductDetails = createAsyncThunk(
   "products/fetchAsyncProductDetails",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await serverApi.get(`${BASE_URL}items/${id}`);
+      const response = await serverApi.get(`items/${id}`);
       return response.data;
     } catch(err) {
       if (!err.response) {
@@ -69,7 +67,7 @@ export const fetchAsyncProductsByCategory = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const response = await serverApi.get(
-        id === 11 ? `${BASE_URL}items` : `${BASE_URL}items?categoryId=${id}`
+        id === 11 ? `items` : `items?categoryId=${id}`
       );
       return response.data;
     } catch(err) {
@@ -87,8 +85,8 @@ export const fetchAsyncMoreProducts = createAsyncThunk(
     try {
       const response = await serverApi.get(
         id === 11 ? 
-        `${BASE_URL}items?offset=${offset}` : 
-        `${BASE_URL}items?categoryId=${id}&offset=${offset}`
+        `items?offset=${offset}` : 
+        `items?categoryId=${id}&offset=${offset}`
       );
       
       return response.data;
