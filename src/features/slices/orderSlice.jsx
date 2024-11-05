@@ -1,13 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import serverApi from "../../common/apis/serverApi";
 
-const BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
 export const sendOrderFormData = createAsyncThunk(
-  "products/fetchAsyncTopSales",
-  async (_, { rejectWithValue }) => {
+  "order/sendOrderFormData",
+  async (data, { rejectWithValue }) => {
     try {
-      const response = await serverApi.get(`${BASE_URL}order`);
+      const response = await serverApi.post(`/order`, {
+        owner: {
+          phone: data.owner.phone,
+          address: data.owner.address,
+        },
+        items: data.items,
+      });
       return response.data;
     } catch(err) {
       if (!err.response) {
@@ -19,34 +23,51 @@ export const sendOrderFormData = createAsyncThunk(
 );
 
 const initialState = {
- telephone: '',
- address: '',
- agreement: false,
+  owner: {
+    phone: '',
+    address: '',
+  },
+  items: [],
+  status: 'idle',
+  successMessage: '',
+  error: null,
 };
 
 const orderSlice = createSlice({
   name: "order",
   initialState,
   reducers: {
-    addTelephone: ((state, { payload }) => {
-      
-    })
+    addFormData: ((state, { payload }) => {
+      const [key] = Object.keys(payload)
+      state.owner[key] = payload[key]
+    }),
+    setProduct: (state, { payload }) => {
+      state.items = payload;
+    },
+    clearOrderState: (state) => {
+      state.owner = { phone: "", address: "" };
+      state.items = [];
+      state.status = "idle";
+      state.successMessage = "Заказ успешно оформлен!";
+    },
   },
   extraReducers: (builder) => {
     builder
 
-    //получение данных для компонента TopSales
     .addCase(sendOrderFormData.pending, (state) => {
-     
+      state.status = "loading";
+      state.successMessage = "";
     })
     .addCase(sendOrderFormData.fulfilled, (state, { payload }) => {
-     
+      state.status = "succeeded";
+      state.successMessage = "Заказ успешно оформлен!";
     })
-    .addCase(sendOrderFormData.rejected, (state, { error }) => {
-      
+    .addCase(sendOrderFormData.rejected, (state, { payload }) => {
+      state.status = "failed";
+      state.error = payload;
     })
 }});
 
-export const { addProductInCart, deleteProduct } = orderSlice.actions;
-export const getOrderFormData = (state) => state.order.order;
+export const { addFormData, setProduct, clearOrderState } = orderSlice.actions;
+export const getOrderFormData = (state) => state.order;
 export default orderSlice.reducer;
