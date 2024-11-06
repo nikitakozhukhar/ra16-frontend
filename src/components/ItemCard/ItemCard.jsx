@@ -6,7 +6,7 @@ const ItemCard = (props) => {
   const { id, price, title, images } = props.item;
 
   return (
-    <div className="card catalog-item-card">
+    <div className="card catalog-item-card card-top">
 
       <div className="img-wrapper">
         <img src={images[0]} className="card-img-top img-fluid" alt={title} />
