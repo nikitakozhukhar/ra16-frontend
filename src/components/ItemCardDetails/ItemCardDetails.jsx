@@ -134,16 +134,16 @@ export default function ItemCardDetails() {
                   <span className="btn-group btn-group-sm pl-2">
                     <button
                       onClick={handleDecreaseProductCount}
-                      className="btn btn-secondary"
+                      className="btn-detail btn-secondary"
                     >
                       -
                     </button>
-                    <span className="btn btn-outline-primary">
+                    <span className="btn-detail">
                       {productCount}
                     </span>
                     <button
                       onClick={handleIncreaseProductCount}
-                      className="btn btn-secondary"
+                      className="btn-detail btn-secondary"
                     >
                       +
                     </button>

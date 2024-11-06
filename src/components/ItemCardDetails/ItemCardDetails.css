@@ -39,20 +39,33 @@ td {
   margin-bottom: 20px;
 }
 
-.btn-group, .btn-group-sm, .pl-2 {
+ .btn-group, .btn-group-sm, .pl-2 {
   display: inline-block;
   height: 51px;
+  margin-bottom: 20px;
+  margin-left: 20px;
 }
 
-.btn .btn-secondary, .btn .btn-outline-primary {
+/* .btn .btn-secondary, .btn .btn-outline-primary {
   display: inline-block;
   width: 35px;
   height: 100%;
+} */
+
+.btn-detail {
+  display: inline-block;
+  width: 35px;
+  height: 100%;
+  padding: 10px;
+  border: 1px solid gray;
+  text-align: center;
+  cursor: pointer;
 }
 
-.btn .btn-secondary {
+.btn-secondary {
   color: white;
-  background-color: #6c757c;
+  background-color: #6c7680;
+  cursor: pointer;
 } 
 
 .catalog-item-size {

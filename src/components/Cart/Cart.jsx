@@ -10,8 +10,6 @@ export default function Cart() {
 
   const { products } = cart;
 
-  // console.log(products)
-
   const totalPrice = products.reduce((sum, product) => {
     return sum + product.price * product.quantity;
   }, 0);
