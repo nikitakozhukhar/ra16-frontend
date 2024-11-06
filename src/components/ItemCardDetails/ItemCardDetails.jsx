@@ -5,12 +5,14 @@ import {
   fetchAsyncProductDetails,
   getfetchedProductDetails,
   removeSelectedProduct,
+  fetchAsyncCategories,
 } from "../../features/slices/productsSlice";
 import {
   addProductInCart,
 } from "../../features/slices/cartSlice";
 import { useEffect, useState } from "react";
 import Loader from "../Loader/Loader";
+import ErrorHandler from "../ErrorHandler/ErrorHandler";
 
 export default function ItemCardDetails() {
   const { id } = useParams();
@@ -48,6 +50,10 @@ export default function ItemCardDetails() {
     });
   };
 
+  const refetchAsyncData = () => {
+    dispatch(fetchAsyncCategories());
+  };
+
   useEffect(() => {
     dispatch(fetchAsyncProductDetails(id));
 
@@ -57,7 +63,7 @@ export default function ItemCardDetails() {
   }, [dispatch, id]);
 
   if (loading) return <Loader />;
-  if (error) return <>{error}</>;
+  if (error) return <ErrorHandler error={error} refetchAsyncData={refetchAsyncData} />;
 
   if (item.sizes) {
     sizes = item.sizes;
